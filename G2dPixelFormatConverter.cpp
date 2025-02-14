@@ -125,26 +125,20 @@ int G2dPixelFormatConverter::getFormatSurface(
             surface.planes[0] = buf->buf_paddr;
             surface.bottom = height / 2;
             surface.stride = width * 2; // 2 bytes per pixel
-
             break;
         case G2D_RGB888:
             surface.planes[0] = buf->buf_paddr;
             surface.bottom = height;
             surface.stride = width;
-
             break;
         case G2D_RGBA8888:
             surface.planes[0] = buf->buf_paddr;
             surface.bottom = height;
             surface.stride = width;
-            surface.global_alpha = 0xff;
-
             break;
-            
         default:
             std::cerr << "Unsupported format" << std::endl;
             return -1;
-
             break;
     }
 
