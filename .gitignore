@@ -1,0 +1,4 @@
+*.o
+capture-frame
+build/
+.vscode/
