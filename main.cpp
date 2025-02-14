@@ -5,6 +5,8 @@
 
 int main(int argc, char const *argv[])
 {
+    // Main issue: on every conversion except YUYV to RGB888, the program will 
+    // write all zeroes to the buffer
     // TODO: Better help text
     if(argc < 2) {
         std::cout << "Usage: "
