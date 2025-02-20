@@ -14,7 +14,14 @@ class G2dPixelFormatConverter {
 
     std::optional<G2dFormatMetadata> convertFormatAliasToG2dFormat(const std::string& format);
     
-    int getFormatSurface(
+    int setSourceFormatSurface(
+        g2d_format format,
+        struct g2d_surface& surface,
+        g2d_buf* buf,
+        size_t width,
+        size_t height
+    );
+    int setDestinationFormatSurface(
         g2d_format format,
         struct g2d_surface& surface,
         g2d_buf* buf,
