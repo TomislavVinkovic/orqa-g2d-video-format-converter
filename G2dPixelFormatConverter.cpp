@@ -128,31 +128,22 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         surface.planes[0] = buf->buf_paddr;
         surface.planes[1] = buf->buf_paddr + (width * height);
         surface.bottom = height;
-        surface.stride = width;
+        surface.stride = width * 8;
     }
 
     // RGB FORMATS
     else if(
-        format == G2D_RGB888 || 
         format == G2D_RGBA8888 || 
         format == G2D_XRGB8888 || 
+        format == G2D_RGBX8888 ||
+        format == G2D_ARGB8888 ||
         format == G2D_RGBA5551 || 
-        format == G2D_RGBX5551 || 
-        format == G2D_RGB565
+        format == G2D_RGB565 ||
+        format == G2D_RGB888
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
         surface.stride = width;
-    }
-    else if(format == G2D_RGBX8888) {
-        surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height;
-        surface.stride = width * 2;
-    }
-    else if(format == G2D_ARGB8888) {
-        surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height;
-        surface.stride = width * 4;
     }
     else {
         std::cerr << "Unsupported format" << std::endl;
@@ -181,7 +172,7 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     // YUV FORMATS
     if(format == G2D_YUYV) {
         surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height;
+        surface.bottom = height / 2;
         surface.stride = width * 2; // 2 bytes per pixel
     }
     else if(format == G2D_NV12) {
