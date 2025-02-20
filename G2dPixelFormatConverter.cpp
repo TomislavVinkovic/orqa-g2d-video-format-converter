@@ -143,7 +143,7 @@ int G2dPixelFormatConverter::getFormatSurface(
         case G2D_ARGB8888:
             surface.planes[0] = buf->buf_paddr;
             surface.bottom = height;
-            surface.stride = width;
+            surface.stride = width * 4;
             break;
         case G2D_XRGB8888:
             surface.planes[0] = buf->buf_paddr;
