@@ -118,57 +118,36 @@ int G2dPixelFormatConverter::getFormatSurface(
     surface.rot = G2D_ROTATION_0;
     surface.format = format;
 
-    switch (format)
-    {
-        case G2D_YUYV:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height / 2;
-            surface.stride = width * 2; // 2 bytes per pixel
-            break;
-        case G2D_RGB888: // +
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGBA8888: // +
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGBX8888:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width * 2;
-            break;
-        case G2D_ARGB8888:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width * 4;
-            break;
-        case G2D_XRGB8888:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGBA5551:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGBX5551:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGB565: // +
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        default:
-            std::cerr << "Unsupported format" << std::endl;
-            return -1;
-            break;
+    if(format == G2D_YUYV) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height / 2;
+        surface.stride = width * 2; // 2 bytes per pixel
+    }
+    else if(
+        format == G2D_RGB888 || 
+        format == G2D_RGBA8888 || 
+        format == G2D_XRGB8888 || 
+        format == G2D_RGBA5551 || 
+        format == G2D_RGBX5551 || 
+        format == G2D_RGB565
+    ) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height;
+        surface.stride = width;
+    }
+    else if(format == G2D_RGBX8888) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height;
+        surface.stride = width * 2;
+    }
+    else if(format == G2D_ARGB8888) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height;
+        surface.stride = width * 4;
+    }
+    else {
+        std::cerr << "Unsupported format" << std::endl;
+        return -1;
     }
 
     return 0;
