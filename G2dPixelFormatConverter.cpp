@@ -60,7 +60,7 @@ int G2dPixelFormatConverter::convertImage(
 
     // set up the dest buffer on the GPU
     g2d_buf* destG2dBuf = g2d_alloc(destBuffer.size(), 0);
-    std::memset(destG2dBuf->buf_vaddr, 0, destBuffer.size());
+    // std::memset(destG2dBuf->buf_vaddr, 0x00, destBuffer.size());
 
     if(g2d_open(&handle) < 0) {
         std::cerr << "Failed to open the video accelerator" << std::endl;
@@ -81,7 +81,7 @@ int G2dPixelFormatConverter::convertImage(
         return -1;
     }
 
-    // copy the rgb buffer on the GPU to mian memory
+    // copy the rgb buffer on the GPU to main memory
     std::memcpy(destBuffer.data(), destG2dBuf->buf_vaddr, destBuffer.size());
  
     // clean up
@@ -132,11 +132,6 @@ int G2dPixelFormatConverter::getFormatSurface(
             surface.stride = width;
             break;
         case G2D_RGBA8888:
-            surface.planes[0] = buf->buf_paddr;
-            surface.bottom = height;
-            surface.stride = width;
-            break;
-        case G2D_RGBX8888:
             surface.planes[0] = buf->buf_paddr;
             surface.bottom = height;
             surface.stride = width;
