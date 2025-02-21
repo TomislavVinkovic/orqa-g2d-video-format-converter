@@ -124,7 +124,8 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
     if(
         format == G2D_YUYV ||
         format == G2D_YVYU ||
-        format == G2D_UYVY
+        format == G2D_UYVY ||
+        format == G2D_VYUY // This is the only one not tested
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height / 2;
@@ -155,8 +156,8 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         format == G2D_RGBA8888 || 
         format == G2D_XRGB8888 || 
         format == G2D_RGBX8888 ||
-        format == G2D_ARGB8888 
-        // format == G2D_RGBA5551 || 
+        format == G2D_ARGB8888 ||
+        format == G2D_RGBA5551 
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
