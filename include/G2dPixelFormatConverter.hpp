@@ -83,7 +83,6 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
 
 
     // RGBs format conversions
-    {G2D_RGB565, G2D_YUYV},
     {G2D_RGBA8888, G2D_YUYV},
     {G2D_RGBX8888, G2D_YUYV},
     {G2D_ARGB8888, G2D_YUYV},
@@ -118,7 +117,6 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
 
 
     // RGBs format conversions
-    {G2D_RGB565, G2D_YUYV},
     {G2D_RGBA8888, G2D_YUYV},
     {G2D_RGBX8888, G2D_YUYV},
     {G2D_ARGB8888, G2D_YUYV},
