@@ -201,21 +201,13 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
         format == G2D_XRGB8888 || 
         format == G2D_RGBA5551 || 
         format == G2D_RGBX5551 || 
-        format == G2D_RGB565
+        format == G2D_RGB565 ||
+        format == G2D_RGBX8888 ||
+        format == G2D_ARGB8888
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
         surface.stride = width;
-    }
-    else if(format == G2D_RGBX8888) {
-        surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height;
-        surface.stride = width * 2;
-    }
-    else if(format == G2D_ARGB8888) {
-        surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height;
-        surface.stride = width * 4;
     }
     else {
         std::cerr << "Unsupported format" << std::endl;
