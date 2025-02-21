@@ -79,6 +79,11 @@ int G2dPixelFormatConverter::convertImage(
         std::cerr << "Conversion on the GPU failed" << std::endl;
         return -1;
     }
+    if(g2d_finish(handle) < 0) {
+        std::cerr << "Failed to finish the g2d operation" << std::endl;
+        return -1;
+    }
+    g2d_flush(handle);
 
     // copy the rgb buffer on the GPU to main memory
     std::memcpy(destBuffer.data(), destG2dBuf->buf_vaddr, destBuffer.size());
@@ -89,10 +94,7 @@ int G2dPixelFormatConverter::convertImage(
         return -1;
     }
 
-    if(g2d_finish(handle) < 0) {
-        std::cerr << "Failed to finish the g2d operation" << std::endl;
-        return -1;
-    }
+    
 
     if(g2d_close(handle) < 0) { 
         std::cerr << "Failed to close the video accelerator" << std::endl;
@@ -128,7 +130,7 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         surface.planes[0] = buf->buf_paddr;
         surface.planes[1] = buf->buf_paddr + (width * height);
         surface.bottom = height;
-        surface.stride = width * 8;
+        surface.stride = width * 4;
     }
 
     // RGB FORMATS
@@ -136,10 +138,10 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         format == G2D_RGBA8888 || 
         format == G2D_XRGB8888 || 
         format == G2D_RGBX8888 ||
-        format == G2D_ARGB8888 ||
-        format == G2D_RGBA5551 || 
-        format == G2D_RGB565 ||
-        format == G2D_RGB888
+        format == G2D_ARGB8888 
+        // format == G2D_RGBA5551 || 
+        // format == G2D_RGB565 ||
+        // format == G2D_RGB888
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
