@@ -126,11 +126,41 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         surface.bottom = height / 2;
         surface.stride = width * 2; // 2 bytes per pixel
     }
+    if(format == G2D_YVYU) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height / 2;
+        surface.stride = width * 2; // 2 bytes per pixel
+    }
+    if(format == G2D_UYVY) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height / 2;
+        surface.stride = width * 2; // 2 bytes per pixel
+    }
     else if(format == G2D_NV12) {
         surface.planes[0] = buf->buf_paddr;
         surface.planes[1] = buf->buf_paddr + (width * height);
         surface.bottom = height;
-        surface.stride = width * 4;
+        surface.stride = width;
+    }
+    else if(format == G2D_NV21) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.planes[1] = buf->buf_paddr + (width * height);
+        surface.bottom = height;
+        surface.stride = width;
+    }
+    else if(format == G2D_I420) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.planes[1] = buf->buf_paddr + (width * height);
+        surface.planes[2] = buf->buf_paddr + (width * height) + ((width * height) / 4);
+        surface.bottom = height;
+        surface.stride = width;
+    }
+    else if(format == G2D_YV12) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.planes[1] = buf->buf_paddr + (width * height);
+        surface.planes[2] = buf->buf_paddr + (width * height) + ((width * height) / 4);
+        surface.bottom = height;
+        surface.stride = width;
     }
 
     // RGB FORMATS
@@ -140,8 +170,6 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
         format == G2D_RGBX8888 ||
         format == G2D_ARGB8888 
         // format == G2D_RGBA5551 || 
-        // format == G2D_RGB565 ||
-        // format == G2D_RGB888
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
@@ -174,14 +202,8 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     // YUV FORMATS
     if(format == G2D_YUYV) {
         surface.planes[0] = buf->buf_paddr;
-        surface.bottom = height / 2;
-        surface.stride = width * 2; // 2 bytes per pixel
-    }
-    else if(format == G2D_NV12) {
-        surface.planes[0] = buf->buf_paddr;
-        surface.planes[1] = buf->buf_paddr + (width * height);
         surface.bottom = height;
-        surface.stride = width;
+        surface.stride = width; // 2 bytes per pixel
     }
 
     // RGB FORMATS
