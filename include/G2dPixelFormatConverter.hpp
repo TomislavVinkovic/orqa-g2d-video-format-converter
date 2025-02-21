@@ -94,8 +94,6 @@ static const std::unordered_map<std::string, G2dFormatMetadata> formatMap = {
     {"YVYU", {G2D_YVYU, 16}},
     {"UYVY", {G2D_UYVY, 16}},
     {"VYUY", {G2D_VYUY, 16}},
-    {"NV16", {G2D_NV16, 16}},
-    {"NV61", {G2D_NV61, 16}}
 };
 
 /// @brief List of supported format conversion pairs. 
@@ -204,20 +202,4 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
     {G2D_VYUY, G2D_XRGB8888},
     {G2D_VYUY, G2D_RGBA5551},
     {G2D_VYUY, G2D_RGBX5551},
-
-    {G2D_NV16, G2D_RGB565},
-    {G2D_NV16, G2D_RGBA8888},
-    {G2D_NV16, G2D_RGBX8888},
-    {G2D_NV16, G2D_ARGB8888},
-    {G2D_NV16, G2D_XRGB8888},
-    {G2D_NV16, G2D_RGBA5551},
-    {G2D_NV16, G2D_RGBX5551},
-
-    {G2D_NV61, G2D_RGB565},
-    {G2D_NV61, G2D_RGBA8888},
-    {G2D_NV61, G2D_RGBX8888},
-    {G2D_NV61, G2D_ARGB8888},
-    {G2D_NV61, G2D_XRGB8888},
-    {G2D_NV61, G2D_RGBA5551},
-    {G2D_NV61, G2D_RGBX5551},
 };
