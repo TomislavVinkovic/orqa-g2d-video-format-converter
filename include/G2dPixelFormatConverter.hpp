@@ -60,28 +60,20 @@ static const std::unordered_map<std::string, G2dFormatMetadata> formatMap = {
     {"YVYU", {G2D_YVYU, 16}},
     {"UYVY", {G2D_UYVY, 16}},
     {"VYUY", {G2D_VYUY, 16}},
-    {"NV16", {G2D_NV16, 16}},
-    {"NV61", {G2D_NV61, 16}}
+    // These formats are not supported at the moment
+    // {"NV16", {G2D_NV16, 16}},
+    // {"NV61", {G2D_NV61, 16}}
 };
 
 const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityMap = {
-    // YUYV -> YUYV format conversions
-    {G2D_NV12, G2D_YUYV},
-    {G2D_I420, G2D_YUYV},
-    {G2D_YV12, G2D_YUYV},
-    {G2D_NV21, G2D_YUYV},
-    {G2D_YUYV, G2D_NV12},
-    {G2D_YUYV, G2D_NV21},
-    {G2D_YUYV, G2D_NV16},
-    {G2D_YUYV, G2D_NV61},
-    {G2D_YVYU, G2D_YUYV},
-    {G2D_UYVY, G2D_YUYV},
-    {G2D_VYUY, G2D_YUYV},
-    {G2D_NV16, G2D_YUYV},
-    {G2D_NV61, G2D_YUYV},
 
-
-    // RGBs format conversions
+    // RGBs -> YUV format conversions
+    {G2D_RGBA8888, G2D_YUYV},
+    {G2D_RGBX8888, G2D_YUYV},
+    {G2D_ARGB8888, G2D_YUYV},
+    {G2D_XRGB8888, G2D_YUYV},
+    {G2D_RGBA5551, G2D_YUYV},
+    {G2D_RGBX5551, G2D_YUYV},
     {G2D_RGBA8888, G2D_YUYV},
     {G2D_RGBX8888, G2D_YUYV},
     {G2D_ARGB8888, G2D_YUYV},
@@ -89,6 +81,7 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
     {G2D_RGBA5551, G2D_YUYV},
     {G2D_RGBX5551, G2D_YUYV},
 
+    // YUV -> RGBs format conversions
     {G2D_NV12, G2D_RGB565},
     {G2D_NV12, G2D_RGBA8888},
     {G2D_NV12, G2D_RGBX8888},
@@ -100,28 +93,6 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
     {G2D_I420, G2D_RGB565},
     {G2D_I420, G2D_RGBA8888},
     {G2D_I420, G2D_RGBX8888},
-    {G2D_NV12, G2D_YUYV},
-    {G2D_I420, G2D_YUYV},
-    {G2D_YV12, G2D_YUYV},
-    {G2D_NV21, G2D_YUYV},
-    {G2D_YUYV, G2D_NV12},
-    {G2D_YUYV, G2D_NV21},
-    {G2D_YUYV, G2D_NV16},
-    {G2D_YUYV, G2D_NV61},
-    {G2D_YVYU, G2D_YUYV},
-    {G2D_UYVY, G2D_YUYV},
-    {G2D_VYUY, G2D_YUYV},
-    {G2D_NV16, G2D_YUYV},
-    {G2D_NV61, G2D_YUYV},
-
-
-    // RGBs format conversions
-    {G2D_RGBA8888, G2D_YUYV},
-    {G2D_RGBX8888, G2D_YUYV},
-    {G2D_ARGB8888, G2D_YUYV},
-    {G2D_XRGB8888, G2D_YUYV},
-    {G2D_RGBA5551, G2D_YUYV},
-    {G2D_RGBX5551, G2D_YUYV},
 
     {G2D_NV12, G2D_RGB565},
     {G2D_NV12, G2D_RGBA8888},
@@ -181,19 +152,19 @@ const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityM
     {G2D_VYUY, G2D_RGBA5551},
     {G2D_VYUY, G2D_RGBX5551},
 
-    {G2D_NV16, G2D_RGB565},
-    {G2D_NV16, G2D_RGBA8888},
-    {G2D_NV16, G2D_RGBX8888},
-    {G2D_NV16, G2D_ARGB8888},
-    {G2D_NV16, G2D_XRGB8888},
-    {G2D_NV16, G2D_RGBA5551},
-    {G2D_NV16, G2D_RGBX5551},
+    // {G2D_NV16, G2D_RGB565},
+    // {G2D_NV16, G2D_RGBA8888},
+    // {G2D_NV16, G2D_RGBX8888},
+    // {G2D_NV16, G2D_ARGB8888},
+    // {G2D_NV16, G2D_XRGB8888},
+    // {G2D_NV16, G2D_RGBA5551},
+    // {G2D_NV16, G2D_RGBX5551},
 
-    {G2D_NV61, G2D_RGB565},
-    {G2D_NV61, G2D_RGBA8888},
-    {G2D_NV61, G2D_RGBX8888},
-    {G2D_NV61, G2D_ARGB8888},
-    {G2D_NV61, G2D_XRGB8888},
-    {G2D_NV61, G2D_RGBA5551},
-    {G2D_NV61, G2D_RGBX5551},
+    // {G2D_NV61, G2D_RGB565},
+    // {G2D_NV61, G2D_RGBA8888},
+    // {G2D_NV61, G2D_RGBX8888},
+    // {G2D_NV61, G2D_ARGB8888},
+    // {G2D_NV61, G2D_XRGB8888},
+    // {G2D_NV61, G2D_RGBA5551},
+    // {G2D_NV61, G2D_RGBX5551},
 };
