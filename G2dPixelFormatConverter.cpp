@@ -190,6 +190,25 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     // YUV FORMATS
     if(format == G2D_YUYV) {
         surface.planes[0] = buf->buf_paddr;
+        surface.bottom = height / 2;
+        surface.stride = width * 2;
+    }
+    else if(
+        format == G2D_NV12 ||
+        format == G2D_NV21
+    ) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.planes[1] = buf->buf_paddr + (width * height);
+        surface.bottom = height;
+        surface.stride = width;
+    }
+    else if(
+        format == G2D_I420 ||
+        format == G2D_YV12
+    ) {
+        surface.planes[0] = buf->buf_paddr;
+        surface.planes[1] = buf->buf_paddr + (width * height);
+        surface.planes[2] = buf->buf_paddr + (width * height) + ((width * height) / 4);
         surface.bottom = height;
         surface.stride = width;
     }

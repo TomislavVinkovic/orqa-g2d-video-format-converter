@@ -9,7 +9,6 @@
 #include "G2dFormatMetadata.hpp"
 
 // TODO: Put this class in a namespace
-// TODO: Add VYUY support
 
 class G2dPixelFormatConverter {
 
