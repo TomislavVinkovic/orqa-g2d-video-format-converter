@@ -33,10 +33,26 @@ int convert(int argc, char const *argv[]) {
         return -1;
     }
 
+    // TODO: Find 
+    ORQA_G2D_FORMAT formatSrcEnum, formatDestEnum;
+    if(stringToG2DFormatMap.find(formatSrc) == stringToG2DFormatMap.end()) {
+        std::cerr << "Invalid source format" << std::endl;
+        return -1;
+    } else {
+        formatSrcEnum = stringToG2DFormatMap.at(formatSrc);
+    }
+
+    if(stringToG2DFormatMap.find(formatDest) == stringToG2DFormatMap.end()) {
+        std::cerr << "Invalid destination format" << std::endl;
+        return -1;
+    } else {
+        formatDestEnum = stringToG2DFormatMap.at(formatDest);
+    }
+
     // Step 3: convert the image
     if(g2dPixelFormatConverter.convertImage(
-        formatSrc,
-        formatDest,
+        formatSrcEnum,
+        formatDestEnum,
         srcBuffer, 
         destBuffer, 
         width, 
@@ -56,7 +72,7 @@ int convert(int argc, char const *argv[]) {
 }
 
 int listAllFormats() {
-    for(auto& [key, value] : formatMap) {
+    for(auto& [key, value] : stringToG2DFormatMap) {
         std::cout << key << std::endl;
     }
 

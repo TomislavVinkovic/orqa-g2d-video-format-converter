@@ -14,7 +14,7 @@ int G2dPixelFormatConverter::checkFormatSupport(g2d_format srcFormat, g2d_format
 }
 
 std::optional<G2dFormatMetadata> 
-    G2dPixelFormatConverter::convertFormatAliasToG2dFormat(const std::string& format) 
+    G2dPixelFormatConverter::convertFormatAliasToG2dFormat(ORQA_G2D_FORMAT format) 
 {
     if(formatMap.find(format) != formatMap.end()) {
         return formatMap.at(format);
@@ -24,8 +24,8 @@ std::optional<G2dFormatMetadata>
 }
 
 int G2dPixelFormatConverter::convertImage(
-    const std::string& srcFormat,
-    const std::string& destFormat,
+    ORQA_G2D_FORMAT srcFormat,
+    ORQA_G2D_FORMAT destFormat,
     const std::vector<uint8_t>& srcBuffer,
     std::vector<uint8_t>& destBuffer,
     size_t width,
@@ -239,7 +239,7 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
 }
 
 void G2dPixelFormatConverter::listAllFormats() {
-    for(const auto& [alias, metadata] : formatMap) {
-        std::cout << alias << " -> " << metadata.format << std::endl;
+    for(const auto& [alias, orqaFormat] : stringToG2DFormatMap) {
+        std::cout << alias << std::endl;
     }
 }
