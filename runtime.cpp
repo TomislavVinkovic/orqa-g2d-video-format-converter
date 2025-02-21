@@ -2,6 +2,7 @@
 #include "include/image-io.hpp"
 #include "include/G2dPixelFormatConverter.hpp"
 #include "include/G2dFormatMetadata.hpp"
+#include "tests/include/G2dConvertTestSuite.hpp"
 
 #include <iostream>
 #include <unordered_map>
@@ -57,6 +58,16 @@ int convert(int argc, char const *argv[]) {
 int listAllFormats() {
     for(auto& [key, value] : formatMap) {
         std::cout << key << std::endl;
+    }
+
+    return 0;
+}
+
+int test() {
+    G2dConvertTestSuite testSuite;
+    if(testSuite.runAllTests() < 0) {
+        std::cerr << "Some tests failed to complete" << std::endl;
+        return -1;
     }
 
     return 0;

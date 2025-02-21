@@ -1,16 +1,17 @@
-#include "include/G2dPixelFormatConverter.hpp"
-#include "include/image-io.hpp"
+#include "../include/G2dPixelFormatConverter.hpp"
+#include "../include/image-io.hpp"
+#include "include/G2dConvertTestSuite.hpp"
 
 #include <vector>
 #include <iostream>
 #include <functional>
 
-void formatsPrintTest() {
+void G2dConvertTestSuite::formatsPrintTest() {
     G2dPixelFormatConverter converter;
     converter.listAllFormats();
 }
 
-int YUYVToRGBAConversionTest() {
+int G2dConvertTestSuite::YUYVToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> yuyvBuffer;
@@ -39,7 +40,7 @@ int YUYVToRGBAConversionTest() {
         return -1;
     }
 }
-int I420ToRGBAConversionTest() {
+int G2dConvertTestSuite::I420ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> i420Buffer;
@@ -69,7 +70,7 @@ int I420ToRGBAConversionTest() {
     }
 }
 
-int NV12ToRGBAConversionTest() {
+int G2dConvertTestSuite::NV12ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> nv12Buffer;
@@ -101,7 +102,7 @@ int NV12ToRGBAConversionTest() {
     }
 }
 
-int NV21ToRGBAConversionTest() {
+int G2dConvertTestSuite::NV21ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> nv21Buffer;
@@ -131,7 +132,7 @@ int NV21ToRGBAConversionTest() {
     }
 }
 
-int UYVYToRGBAConversionTest() {
+int G2dConvertTestSuite::UYVYToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> uyvyBuffer;
@@ -161,7 +162,7 @@ int UYVYToRGBAConversionTest() {
     }
 }
 
-int YV12ToRGBAConversionTest() {
+int G2dConvertTestSuite::YV12ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> yv12Buffer;
@@ -192,7 +193,7 @@ int YV12ToRGBAConversionTest() {
     
 }
 
-int YVYUToRGBAConversionTest() {
+int G2dConvertTestSuite::YVYUToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
 
     std::vector<uint8_t> yvyuBuffer;
@@ -200,7 +201,7 @@ int YVYUToRGBAConversionTest() {
     std::vector<uint8_t> rgbaExcpectedBuffer;
 
     readImageRaw("tests/inputs/input.yvyu", yvyuBuffer);
-    readImageRaw("tests/expected/yv12.rgba", rgbaExcpectedBuffer);
+    readImageRaw("tests/expected/yvyu.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
         "YVYU", 
@@ -222,25 +223,27 @@ int YVYUToRGBAConversionTest() {
     }
 }
 
-int main() {
-    std::vector<int (*)()> tests = {
-        YUYVToRGBAConversionTest,
-        I420ToRGBAConversionTest,
-        NV12ToRGBAConversionTest,
-        NV21ToRGBAConversionTest,
-        UYVYToRGBAConversionTest,
-        YV12ToRGBAConversionTest,
-        YVYUToRGBAConversionTest
+int G2dConvertTestSuite::runAllTests() {
+    std::vector<std::function<int()>> tests = {
+        [this]() { return YUYVToRGBAConversionTest(); },
+        [this]() { return I420ToRGBAConversionTest(); },
+        [this]() { return NV12ToRGBAConversionTest(); },
+        [this]() { return NV21ToRGBAConversionTest(); },
+        [this]() { return UYVYToRGBAConversionTest(); },
+        [this]() { return YV12ToRGBAConversionTest(); },
+        [this]() { return YVYUToRGBAConversionTest(); }
     };
 
     for (int i = 0; i < tests.size(); i++) {
         int result = tests[i]();
         if (result == 0) {
-            std::cout << "Test " << i << " passed" << std::endl;
+            std::cout << "Test " << i+1 << " passed" << std::endl;
         }
         else {
-            std::cout << "Test " << i << " failed" << std::endl;
+            std::cout << "Test " << i+1 << " failed" << std::endl;
+            return -1;
         }
-        
     }
+    std::cout << "All tests passed" << std::endl;
+    return 0;
 }

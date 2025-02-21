@@ -20,7 +20,9 @@ int main(int argc, char const *argv[])
         return listAllFormats();
     } else if(command == "convert") {
         return convert(argc, argv);
-    } else {
+    } else if(command == "test") {
+        return test();
+    }else {
         std::cout << "Invalid command" << std::endl;
         return -1;
     }

@@ -238,7 +238,7 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     return 0;
 }
 
-void listAllFormats() {
+void G2dPixelFormatConverter::listAllFormats() {
     for(const auto& [alias, metadata] : formatMap) {
         std::cout << alias << " -> " << metadata.format << std::endl;
     }

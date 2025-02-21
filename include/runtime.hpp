@@ -13,3 +13,7 @@ int convert(int argc, char const *argv[]);
 /// @details Prints all available pixel format names that can be used for conversion to the terminal
 /// @return 0 on success, -1 on failure
 int listAllFormats();
+
+/// @brief Runs the test suite
+/// @return 0 on all tests passed, -1 on test failure
+int test();
