@@ -8,12 +8,23 @@
 
 #include "G2dFormatMetadata.hpp"
 
-// TODO: Put this class in a namespace
-
+/// @brief A class that handles pixel format conversion using GPU acceleration
+/// This class provides functionality to convert between various pixel formats
+/// including RGB and YUV color spaces using the G2D hardware accelerator
 class G2dPixelFormatConverter {
-
+private:
+    /// @brief Converts a format string to its corresponding G2D format metadata
+    /// @param format String representation of the pixel format (e.g., "RGB565", "NV12")
+    /// @return Optional containing G2dFormatMetadata if format is valid, empty optional otherwise
     std::optional<G2dFormatMetadata> convertFormatAliasToG2dFormat(const std::string& format);
     
+    /// @brief Configures the source surface for G2D operations
+    /// @param format G2D format enumeration for the source
+    /// @param surface Reference to the G2D surface structure to be configured
+    /// @param buf Pointer to the G2D buffer containing source data
+    /// @param width Width of the image in pixels
+    /// @param height Height of the image in pixels
+    /// @return 0 on success, -1 on failure
     int setSourceFormatSurface(
         g2d_format format,
         struct g2d_surface& surface,
@@ -21,6 +32,14 @@ class G2dPixelFormatConverter {
         size_t width,
         size_t height
     );
+
+    /// @brief Configures the destination surface for G2D operations
+    /// @param format G2D format enumeration for the destination
+    /// @param surface Reference to the G2D surface structure to be configured
+    /// @param buf Pointer to the G2D buffer for output
+    /// @param width Width of the image in pixels
+    /// @param height Height of the image in pixels
+    /// @return 0 on success, -1 on failure
     int setDestinationFormatSurface(
         g2d_format format,
         struct g2d_surface& surface,
@@ -28,19 +47,36 @@ class G2dPixelFormatConverter {
         size_t width,
         size_t height
     );
+
+    /// @brief Verifies if conversion between two formats is supported
+    /// @param srcFormat Source G2D format enumeration
+    /// @param destFormat Destination G2D format enumeration
+    /// @return 0 if conversion is supported, -1 otherwise
     int checkFormatSupport(g2d_format srcFormat, g2d_format destFormat);
 
-    public:        
-        int convertImage(
-            const std::string& srcFormat,
-            const std::string& destFormat,
-            const std::vector<uint8_t>& srcBuffer,
-            std::vector<uint8_t>& destBuffer,
-            size_t width,
-            size_t height
-        );
+public:        
+    /// @brief Converts an image from one pixel format to another using G2D hardware
+    /// @param srcFormat String representation of source format (e.g., "RGB565", "NV12")
+    /// @param destFormat String representation of destination format
+    /// @param srcBuffer Vector containing source image data
+    /// @param destBuffer Vector to store converted image data (will be resized as needed)
+    /// @param width Width of the image in pixels
+    /// @param height Height of the image in pixels
+    /// @return 0 on successful conversion, -1 on failure
+    int convertImage(
+        const std::string& srcFormat,
+        const std::string& destFormat,
+        const std::vector<uint8_t>& srcBuffer,
+        std::vector<uint8_t>& destBuffer,
+        size_t width,
+        size_t height
+    );
+
+    /// @brief Lists all supported pixel formats
+    void listAllFormats();
 };
 
+/// @brief Mapping of format strings to their corresponding G2D format and bits per pixel
 static const std::unordered_map<std::string, G2dFormatMetadata> formatMap = {
     {"RGB565", {G2D_RGB565, 16}},
     {"RGBA8888", {G2D_RGBA8888, 32}},
@@ -50,8 +86,6 @@ static const std::unordered_map<std::string, G2dFormatMetadata> formatMap = {
     {"RGB888", {G2D_RGB888, 24}},
     {"RGBA5551", {G2D_RGBA5551, 16}},
     {"RGBX5551", {G2D_RGBX5551, 16}},
-    // Assume that the resolution is even
-    // TODO: Add rounding up support for odd resolutions
     {"NV12", {G2D_NV12, 12}},
     {"I420", {G2D_I420, 12}},
     {"YV12", {G2D_YV12, 12}},
@@ -64,6 +98,9 @@ static const std::unordered_map<std::string, G2dFormatMetadata> formatMap = {
     {"NV61", {G2D_NV61, 16}}
 };
 
+/// @brief List of supported format conversion pairs. 
+/// Each pair represents a valid source->destination format conversion
+/// that is supported by the G2D hardware
 const static std::vector<std::pair<g2d_format, g2d_format>> formatCompatibilityMap = {
     // YUYV -> YUYV format conversions
     {G2D_NV12, G2D_YUYV},
