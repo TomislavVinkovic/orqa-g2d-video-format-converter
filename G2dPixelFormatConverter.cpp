@@ -129,7 +129,7 @@ int G2dPixelFormatConverter::setSourceFormatSurface(
     ) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height / 2;
-        surface.stride = width * 2; // 2 bytes per pixel
+        surface.stride = width * 2;
     }
     else if(
         format == G2D_NV12 ||
@@ -191,7 +191,7 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     if(format == G2D_YUYV) {
         surface.planes[0] = buf->buf_paddr;
         surface.bottom = height;
-        surface.stride = width; // 2 bytes per pixel
+        surface.stride = width;
     }
 
     // RGB FORMATS
