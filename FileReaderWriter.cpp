@@ -1,14 +1,14 @@
-#include "include/image-io.hpp"
+#include "include/FileReaderWriter.hpp"
 #include <span>
 
-int writeImageRaw (
+FileReaderWriterStatus FileReaderWriter::writeFileRaw (
     const std::string& filename, 
     const std::span<uint8_t> buffer
 ) {
     std::ofstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
-        return -1;
+        return FileReaderWriterStatus::FILE_OPEN_FAILURE;
     }
 
     file.write(
@@ -18,17 +18,17 @@ int writeImageRaw (
     file.flush();
     file.close();
 
-    return 0;
+    return FileReaderWriterStatus::SUCCESS;
 }
 
-int readImageRaw (
+FileReaderWriterStatus FileReaderWriter::readFileRaw (
     const std::string& filename, 
     std::vector<uint8_t>& buffer
 ) {
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
-        return -1;
+        return FileReaderWriterStatus::FILE_OPEN_FAILURE;
     }
 
     file.seekg(0, std::ios::end);
@@ -44,5 +44,5 @@ int readImageRaw (
     );
     file.close();
 
-    return 0;
+    return FileReaderWriterStatus::SUCCESS;
 }

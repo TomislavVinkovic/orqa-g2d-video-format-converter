@@ -1,17 +1,28 @@
 # pragma once
 
+enum class G2dConvertTestSuiteStatus {
+    SUCCESS = 0,
+    FAILURE = -1
+};
+
+enum class TestStatus {
+    PASS = 0,
+    GENERAL_TEST_FAILURE = -1,
+    INCORRECT_RESULT_FAILURE = -2,
+};
+
 class G2dConvertTestSuite {
     void formatsPrintTest();
-    int YUYVToRGBAConversionTest();
-    int I420ToRGBAConversionTest();
-    int YV12ToRGBAConversionTest();
-    int NV12ToRGBAConversionTest();
-    int NV21ToRGBAConversionTest();
-    int UYVYToRGBAConversionTest();
-    int YVYUToRGBAConversionTest();
+    TestStatus YUYVToRGBAConversionTest();
+    TestStatus I420ToRGBAConversionTest();
+    TestStatus YV12ToRGBAConversionTest();
+    TestStatus NV12ToRGBAConversionTest();
+    TestStatus NV21ToRGBAConversionTest();
+    TestStatus UYVYToRGBAConversionTest();
+    TestStatus YVYUToRGBAConversionTest();
 
     public:
         G2dConvertTestSuite() = default;
         ~G2dConvertTestSuite() = default;
-        int runAllTests();
+        G2dConvertTestSuiteStatus runAllTests();
 };

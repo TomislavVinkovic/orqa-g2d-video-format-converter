@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "G2dFormatMetadata.hpp"
+
 enum class ORQA_G2D_FORMAT {
     FMT_RGB565 = 0,
     FMT_RGBA8888,

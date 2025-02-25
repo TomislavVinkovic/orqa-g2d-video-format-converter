@@ -28,7 +28,7 @@ FormatManagerStatus G2dFormatManager::isFormatConversionSupported(g2d_format src
         std::cerr << "Unsupported format conversion" << std::endl;
         return FormatManagerStatus::CONVERSION_NOT_SUPPORTED_ERROR;
     }
-    return FormatManagerStatus::NO_ERROR;
+    return FormatManagerStatus::SUCCESS;
     
 }
 
