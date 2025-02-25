@@ -8,6 +8,11 @@
 
 #include "G2dFormatMetadata.hpp"
 
+enum class FormatManagerStatus {
+    SUCCESS = 0,
+    CONVERSION_NOT_SUPPORTED_ERROR = -1
+};
+
 class G2dFormatManager {
     public:
 
@@ -28,7 +33,7 @@ class G2dFormatManager {
         /// @param srcFormat Source G2D format
         /// @param destFormat Destination G2D format
         /// @return True if conversion is supported, false otherwise
-        static bool isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat);
+        static FormatManagerStatus isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat);
 
         /// @brief Lists all supported pixel formats
         static void listAllFormats();

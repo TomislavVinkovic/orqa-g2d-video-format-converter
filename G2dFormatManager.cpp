@@ -17,13 +17,19 @@ std::optional<G2dFormatMetadata> G2dFormatManager::getFormatMetadata(ORQA_G2D_FO
     }
 }
 
-bool G2dFormatManager::isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat) {
-    return 
+FormatManagerStatus G2dFormatManager::isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat) {
+    if(
         std::find(
             G2D_FORMAT_COMPATIBILITY_LIST.begin(), 
             G2D_FORMAT_COMPATIBILITY_LIST.end(), 
             std::make_pair(srcFormat, destFormat)
-        ) != G2D_FORMAT_COMPATIBILITY_LIST.end();
+        ) == G2D_FORMAT_COMPATIBILITY_LIST.end()
+    ) {
+        std::cerr << "Unsupported format conversion" << std::endl;
+        return FormatManagerStatus::CONVERSION_NOT_SUPPORTED_ERROR;
+    }
+    return FormatManagerStatus::NO_ERROR;
+    
 }
 
 void G2dFormatManager::listAllFormats() {

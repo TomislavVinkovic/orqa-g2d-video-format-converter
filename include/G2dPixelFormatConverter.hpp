@@ -6,6 +6,20 @@
 #include "G2dFormatMetadata.hpp"
 #include "formats.hpp"
 
+enum class G2dPixelFormatConverterStatus {
+    SUCCESS = 0,
+    GENERAL_CONVERSION_ERROR = -1,
+    FINISH_OPERATION_ERROR = -2,
+    SURFACE_ERROR = -3,
+    DEVICE_ERROR = -4,
+    UNSUPPORTED_FORMAT_ERROR = -5,
+    UNSUPPORTED_SOURCE_FORMAT_ERROR = -6,
+    UNSUPPORTED_DESTINATION_FORMAT_ERROR = -7,
+    MEMORY_DEALLOCATION_ERROR = -8,
+    INVALID_FORMAT_ERROR = -9,
+    UNSUPPORTED_CONVERSION_ERROR = -10,
+};
+
 /// @brief A class that handles pixel format conversion using GPU acceleration
 /// This class provides functionality to convert between various pixel formats
 /// including RGB and YUV color spaces using the G2D hardware accelerator
@@ -18,7 +32,7 @@ class G2dPixelFormatConverter {
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
         /// @return 0 on success, -1 on failure
-        int setSourceFormatSurface(
+        G2dPixelFormatConverterStatus setSourceFormatSurface(
             g2d_format format,
             struct g2d_surface& surface,
             g2d_buf* buf,
@@ -33,7 +47,7 @@ class G2dPixelFormatConverter {
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
         /// @return 0 on success, -1 on failure
-        int setDestinationFormatSurface(
+        G2dPixelFormatConverterStatus setDestinationFormatSurface(
             g2d_format format,
             struct g2d_surface& surface,
             g2d_buf* buf,
@@ -50,7 +64,7 @@ class G2dPixelFormatConverter {
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
         /// @return 0 on successful conversion, -1 on failure
-        int convertImage(
+        G2dPixelFormatConverterStatus convertImage(
             ORQA_G2D_FORMAT srcFormat,
             ORQA_G2D_FORMAT destFormat,
             const std::vector<uint8_t>& srcBuffer,
