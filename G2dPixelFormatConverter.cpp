@@ -1,27 +1,9 @@
 #include "include/G2dPixelFormatConverter.hpp"
+#include "G2dFormatManager.hpp"
 
 #include <cstring>
 #include <iostream>
 #include <algorithm>
-
-int G2dPixelFormatConverter::checkFormatSupport(g2d_format srcFormat, g2d_format destFormat) {
-    return 
-        std::find(
-            formatCompatibilityMap.begin(), 
-            formatCompatibilityMap.end(), 
-            std::make_pair(srcFormat, destFormat)
-        ) != formatCompatibilityMap.end() ? 0 : -1;
-}
-
-std::optional<G2dFormatMetadata> 
-    G2dPixelFormatConverter::convertFormatAliasToG2dFormat(ORQA_G2D_FORMAT format) 
-{
-    if(formatMap.find(format) != formatMap.end()) {
-        return formatMap.at(format);
-    } else {
-        return {};
-    }
-}
 
 int G2dPixelFormatConverter::convertImage(
     ORQA_G2D_FORMAT srcFormat,
@@ -32,15 +14,14 @@ int G2dPixelFormatConverter::convertImage(
     size_t height
 )
 {
-    std::optional<G2dFormatMetadata> srcG2dFormat = convertFormatAliasToG2dFormat(srcFormat);
-    std::optional<G2dFormatMetadata> destG2dFormat = convertFormatAliasToG2dFormat(destFormat);
-
+    std::optional<G2dFormatMetadata> srcG2dFormat = G2dFormatManager::getFormatMetadata(srcFormat);
+    std::optional<G2dFormatMetadata> destG2dFormat = G2dFormatManager::getFormatMetadata(destFormat);
     if(!srcG2dFormat.has_value() || !destG2dFormat.has_value()) {
         std::cerr << "Invalid source or destination format" << std::endl;
         return -1;
     }
 
-    if(checkFormatSupport(srcG2dFormat->format, destG2dFormat->format) < 0) {
+    if(G2dFormatManager::isFormatConversionSupported(srcG2dFormat->format, destG2dFormat->format) < 0) {
         std::cerr << "Unsupported format conversion" << std::endl;
         return -1;
     }
@@ -48,7 +29,7 @@ int G2dPixelFormatConverter::convertImage(
     void* handle;
     struct g2d_surface srcSurface, destSurface;
 
-    // set up the stc buffer on the GPU
+    // set up the src buffer on the GPU
     g2d_buf* srcG2dBuf = g2d_alloc(srcBuffer.size(), 0);
     std::memcpy(srcG2dBuf->buf_vaddr, srcBuffer.data(), srcBuffer.size());
 
@@ -236,10 +217,4 @@ int G2dPixelFormatConverter::setDestinationFormatSurface(
     }
 
     return 0;
-}
-
-void G2dPixelFormatConverter::listAllFormats() {
-    for(const auto& [alias, orqaFormat] : stringToG2DFormatMap) {
-        std::cout << alias << std::endl;
-    }
 }

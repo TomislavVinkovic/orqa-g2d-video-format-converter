@@ -22,8 +22,8 @@ int G2dConvertTestSuite::YUYVToRGBAConversionTest() {
     readImageRaw("tests/expected/yuyv.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_YUYV, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_YUYV, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         yuyvBuffer, 
         rgbaBuffer, 
         640, 
@@ -51,8 +51,8 @@ int G2dConvertTestSuite::I420ToRGBAConversionTest() {
     readImageRaw("tests/expected/i420.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_I420, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_I420, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         i420Buffer, 
         rgbaBuffer, 
         640, 
@@ -81,8 +81,8 @@ int G2dConvertTestSuite::NV12ToRGBAConversionTest() {
     readImageRaw("tests/expected/nv12.rgba", rgbaExcpectedBuffer);
 
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_NV12, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_NV12, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         nv12Buffer, 
         rgbaBuffer, 
         640, 
@@ -113,8 +113,8 @@ int G2dConvertTestSuite::NV21ToRGBAConversionTest() {
     readImageRaw("tests/expected/nv21.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_NV21, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_NV21, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         nv21Buffer, 
         rgbaBuffer, 
         640, 
@@ -143,8 +143,8 @@ int G2dConvertTestSuite::UYVYToRGBAConversionTest() {
     readImageRaw("tests/expected/uyvy.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_UYVY, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_UYVY, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         uyvyBuffer, 
         rgbaBuffer, 
         640, 
@@ -173,8 +173,8 @@ int G2dConvertTestSuite::YV12ToRGBAConversionTest() {
     readImageRaw("tests/expected/yv12.rgba", rgbaExcpectedBuffer);
 
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_YV12, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_YV12, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         yv12Buffer, 
         rgbaBuffer, 
         640, 
@@ -204,8 +204,8 @@ int G2dConvertTestSuite::YVYUToRGBAConversionTest() {
     readImageRaw("tests/expected/yvyu.rgba", rgbaExcpectedBuffer);
     
     int result = converter.convertImage(
-        ORQA_G2D_FORMAT::G2D_YVYU, 
-        ORQA_G2D_FORMAT::G2D_RGBA8888, 
+        ORQA_G2D_FORMAT::FMT_YVYU, 
+        ORQA_G2D_FORMAT::FMT_RGBA8888, 
         yvyuBuffer, 
         rgbaBuffer, 
         640, 

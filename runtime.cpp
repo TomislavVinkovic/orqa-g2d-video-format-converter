@@ -1,6 +1,7 @@
 #include "include/runtime.hpp"
 #include "include/image-io.hpp"
 #include "include/G2dPixelFormatConverter.hpp"
+#include "include/G2dFormatManager.hpp"
 #include "include/G2dFormatMetadata.hpp"
 #include "tests/include/G2dConvertTestSuite.hpp"
 
@@ -26,6 +27,16 @@ int convert(int argc, char const *argv[]) {
 
     G2dPixelFormatConverter g2dPixelFormatConverter;
 
+    // Step 1: check if the specified formats exist
+    std::optional<ORQA_G2D_FORMAT> formatSrcEnum, formatDestEnum;
+    formatSrcEnum = G2dFormatManager::getFormatEnumFromString(formatSrc);
+    formatDestEnum = G2dFormatManager::getFormatEnumFromString(formatDest);
+
+    if(!formatSrcEnum.has_value() || !formatDestEnum.has_value()) {
+        std::cerr << "Invalid source or destination format" << std::endl;
+        return -1;
+    }
+
     // Step 2: read source image
     std::vector<uint8_t> srcBuffer, destBuffer;
     if(readImageRaw(src, srcBuffer) < 0) {
@@ -33,26 +44,10 @@ int convert(int argc, char const *argv[]) {
         return -1;
     }
 
-    // TODO: Find 
-    ORQA_G2D_FORMAT formatSrcEnum, formatDestEnum;
-    if(stringToG2DFormatMap.find(formatSrc) == stringToG2DFormatMap.end()) {
-        std::cerr << "Invalid source format" << std::endl;
-        return -1;
-    } else {
-        formatSrcEnum = stringToG2DFormatMap.at(formatSrc);
-    }
-
-    if(stringToG2DFormatMap.find(formatDest) == stringToG2DFormatMap.end()) {
-        std::cerr << "Invalid destination format" << std::endl;
-        return -1;
-    } else {
-        formatDestEnum = stringToG2DFormatMap.at(formatDest);
-    }
-
     // Step 3: convert the image
     if(g2dPixelFormatConverter.convertImage(
-        formatSrcEnum,
-        formatDestEnum,
+        *formatSrcEnum, // we know for certain that it contains a value because of the check above
+        *formatDestEnum,
         srcBuffer, 
         destBuffer, 
         width, 
@@ -72,7 +67,7 @@ int convert(int argc, char const *argv[]) {
 }
 
 int listAllFormats() {
-    for(auto& [key, value] : stringToG2DFormatMap) {
+    for(auto& [key, value] : ORQA_FORMAT_LOOKUP) {
         std::cout << key << std::endl;
     }
 
