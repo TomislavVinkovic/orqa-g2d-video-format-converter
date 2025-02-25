@@ -74,7 +74,7 @@ static const std::unordered_map<ORQA_G2D_FORMAT, G2dFormatMetadata> ORQA_TO_G2D_
 /// Each pair represents a valid source->destination format conversion
 /// that is supported by the G2D hardware
 const static std::vector<std::pair<g2d_format, g2d_format>> G2D_FORMAT_COMPATIBILITY_LIST = {
-    // YUYV -> YUYV format conversions
+    // YUV -> YUV format conversions
     {G2D_NV12, G2D_YUYV},
     {G2D_I420, G2D_YUYV},
     {G2D_YV12, G2D_YUYV},

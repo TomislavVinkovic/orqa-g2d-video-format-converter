@@ -15,7 +15,6 @@ enum class FormatManagerStatus {
 
 class G2dFormatManager {
     public:
-
         G2dFormatManager() = delete;
         ~G2dFormatManager() = delete;
 

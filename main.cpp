@@ -16,14 +16,23 @@ int main(int argc, char const *argv[])
     }
     std::string command = argv[1];
 
+    RuntimeStatus status;
+
     if(command == "formats") {
-        return listAllFormats();
+        status = listAllFormats();
     } else if(command == "convert") {
-        return convert(argc, argv);
+        status = convert(argc, argv);
     } else if(command == "test") {
-        return test();
+        status = test();
     }else {
         std::cout << "Invalid command" << std::endl;
-        return -1;
+        return EXIT_FAILURE;
     }
+
+    if(status != RuntimeStatus::SUCCESS) {
+        std::cout << "Command failed" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
