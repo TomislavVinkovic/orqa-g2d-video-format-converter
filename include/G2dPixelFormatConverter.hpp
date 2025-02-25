@@ -31,7 +31,7 @@ class G2dPixelFormatConverter {
         /// @param buf Pointer to the G2D buffer containing source data
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
-        /// @return 0 on success, -1 on failure
+        /// @return G2dPixelFormatConverterStatus::SUCCESS on success, G2dPixelFormatConverterStatus::UNSUPPORTED_SOURCE_FORMAT_ERROR on failure
         G2dPixelFormatConverterStatus setSourceFormatSurface(
             g2d_format format,
             struct g2d_surface& surface,
@@ -46,7 +46,7 @@ class G2dPixelFormatConverter {
         /// @param buf Pointer to the G2D buffer for output
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
-        /// @return 0 on success, -1 on failure
+        /// @return G2dPixelFormatConverterStatus::SUCCESS on success, G2dPixelFormatConverterStatus::UNSUPPORTED_DESTINATION_FORMAT_ERROR on failure
         G2dPixelFormatConverterStatus setDestinationFormatSurface(
             g2d_format format,
             struct g2d_surface& surface,
@@ -63,7 +63,8 @@ class G2dPixelFormatConverter {
         /// @param destBuffer Vector to store converted image data (will be resized as needed)
         /// @param width Width of the image in pixels
         /// @param height Height of the image in pixels
-        /// @return 0 on successful conversion, -1 on failure
+        /// @return SUCCESS on successful conversion, one of the errors defined
+        /// in G2dPixelFormatConverterStatus on failure
         G2dPixelFormatConverterStatus convertImage(
             ORQA_G2D_FORMAT srcFormat,
             ORQA_G2D_FORMAT destFormat,

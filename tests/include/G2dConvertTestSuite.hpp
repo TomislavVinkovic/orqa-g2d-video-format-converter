@@ -13,6 +13,7 @@ enum class TestStatus {
 
 class G2dConvertTestSuite {
     void formatsPrintTest();
+    
     TestStatus YUYVToRGBAConversionTest();
     TestStatus I420ToRGBAConversionTest();
     TestStatus YV12ToRGBAConversionTest();

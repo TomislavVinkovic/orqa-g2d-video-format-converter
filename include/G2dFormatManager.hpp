@@ -31,7 +31,7 @@ class G2dFormatManager {
         /// @brief Checks if conversion between two formats is supported
         /// @param srcFormat Source G2D format
         /// @param destFormat Destination G2D format
-        /// @return True if conversion is supported, false otherwise
+        /// @return FormatManagerStatus::SUCCESS if conversion is supported, FormatManagerStatus::CONVERSION_NOT_SUPPORTED_ERROR otherwise
         static FormatManagerStatus isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat);
 
         /// @brief Lists all supported pixel formats
