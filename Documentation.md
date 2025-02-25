@@ -1,19 +1,15 @@
 
 ## Overview
-
 The **G2D Pixel Format Converter** is a command-line tool and API for converting images between different pixel formats using GPU acceleration via the **G2D API**. The command line tool supports listing available formats, performing image format conversions, and running tests to verify functionality.
-
 ## Compilation
 This software is developed using the C++ 20 standard. In order to compile it, you need to enable C++ 20 by using the following flag in your compiler
 ```c++
 -std=c++20
 ```
-
 You will also need to enable the following flag to enable G2D support
 ```c++
 -lg2d
 ```
-
 You can compile the entire application, along with the runtime and test suite, by using the provided Makefile.
 ## API documentation
 ### Class: G2dPixelFormatConverter
@@ -23,7 +19,6 @@ The class only uses the default constructor. It can be instantiated as
 ```c++
 G2dPixelFormatConverter converter;
 ```
-
 #### Methods
 ##### `convertImage`
 Converts the image from the source 
@@ -62,7 +57,6 @@ G2dPixelFormatConverterStatus result = converter.convertImage(
 
 ### Class: G2dFormatManager
 Handles mapping our custom `ORQA_G2D_FORMAT` enum values to `G2D_FORMAT` enum values used by G2d, and mapping image format strings from the command line to our custom `ORQA_G2D_FORMAT` enum values.
-
 #### Constructors
 The class has all its constructors deleted. That is because all of its methods are static.
 #### Methods
@@ -81,7 +75,6 @@ static std::optional<ORQA_G2D_FORMAT> getFormatEnumFromString(const std::string&
 std::optional<ORQA_G2D_FORMAT> formatSrcEnum;
 formatSrcEnum = G2dFormatManager::getFormatEnumFromString(formatSrc);
 ```
-
 ##### `getFormatMetadata`
 Maps our custom `ORQA_G2D_FORMAT` values to `G2dFormatMetadata` values, used for image processing in G2d.
 ```c++
@@ -160,50 +153,12 @@ FileReaderWriterStatus readFileRaw(
 - `filename` - a relative or absolute path of the file the method writes to
 - `buffer` - a reference to a std::vector that the contents of the file will be written to. The vector is resized inside the method, so all of its contents will be rewritten!
 **Returns**: `FileReaderWriterStatus::SUCCESS` on successful operation, `FILE_OPEN_FAILURE` if the file could not be opened.
-
-## Command line tool
-The program supports three main commands:
-
-### Listing Supported Formats
-To list all available pixel formats:
-```bash
-./g2dconvert formats
-```
-
-### Converting an Image
-To convert an image from one format to another:
-
-```bash
-./g2dconvert convert <format_src> <format_dest> <src> <dest> <width> <height>
-```
-
-#### Parameters:
-- `<format_src>` - Source image format
-- `<format_dest>` - Destination image format
-- `<src>` - Path to the input image file
-- `<dest>` - Path to the output image file
-- `<width>` - Image width in pixels
-- `<height>` - Image height in pixels
-
-#### Example:
-```bash
-./g2dconvert convert YUYV RGBA8888 input.yuyv output.rgba 640 480
-```
-
-### Running Tests
-To execute all conversion tests:
-```shell
-./g2dconvert test
-```
-
-This runs predefined test cases to validate the conversion functions.
-
 ## Test suite
 If you compile the program with the provided Makefile, it will also come included with its test suite built in. The purpose of tests is to compare the output of the converter method for a given input, with the expected output that is either embedded in the code or, more usually, saved in a binary file. 
 
 Example of a test method
 ```c++
-TestStatus G2dConvertTestSuite::YUYVToRGBAConversionTest() {
+TestStatus YUYVToRGBAConversionTest() {
 	G2dPixelFormatConverter converter;
 	FileReaderWriter fileReaderWriter;
 
@@ -246,10 +201,9 @@ TestStatus G2dConvertTestSuite::YUYVToRGBAConversionTest() {
 
 ### Adding a new test method
 Every test method must return a `TestStatus` instance, that can either be `TestStatus::Pass` or `TestStatus::FAILURE`. The app consumer can add add more tests easily using the following method:
-1. Create a new `G2dConvertTestSuite` method inside the `tests/include/G2dConvertTestSuite.hpp` file
-2. Implement the method inside the `tests/G2dConvertTestSuite.cpp` file. If the test has input dependencies, they should be placed in the `tests/inputs` directory. If the test has output dependencies, they should be placed in the `tests/expected` directory
-3. Add the method to the `tests` array in the `runAllTests` method implementation, which is also found in the `tests/G2dConvertTestSuite.cpp` file
-4. Recompile the application using the provided Makefile
+1. Implement the test function inside the `tests/main.cpp` file. If the test has input dependencies, they should be placed in the `tests/inputs` directory. If the test has output dependencies, they should be placed in the `tests/expected` directory
+2. Add the method to the `tests` array in the `main` function, which is also found in the `tests/main.cpp` file
+3. Recompile the application using the provided Makefile
 
 Now, your custom test should be run whenever you run the test suite inside the command line.
 ## Supported file formats and string aliases
@@ -324,7 +278,10 @@ The converter supports the following G2D file formats
 
 **G2D_I420**  
   - `G2D_ARGB8888`  
-  - `G2D_XRGB8888`  
+  - `G2D_XRGB8888`  ￼￼C++￼
+​￼FileReaderWriterStatus readFileRaw(
+	const std::string& filename,
+	std::vector<ui
   - `G2D_RGBA5551`  
   - `G2D_RGBX5551`  
 
