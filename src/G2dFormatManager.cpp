@@ -1,4 +1,4 @@
-#include "include/G2dFormatManager.hpp"
+#include "G2dFormatManager.hpp"
 #include <iostream>
 
 std::optional<ORQA_G2D_FORMAT> G2dFormatManager::getFormatEnumFromString(const std::string& formatStr) {

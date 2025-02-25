@@ -1,11 +1,11 @@
 FILENAME = g2dconvert
-SRC = $(wildcard *.cpp) tests/G2dConvertTestSuite.cpp
-OBJ = $(SRC:.cpp=.o)
+TESTS_DIR = tests
 ASSETS_DIR = assets
 BUILD_DIR = build
-TESTS_DIR = tests
 TEST_INPUTS_DIR = $(TESTS_DIR)/inputs
 TEST_EXPECTED_DIR = $(TESTS_DIR)/expected
+SRC = $(addprefix src/, $(wildcard *.cpp))
+OBJ = $(SRC:.cpp=.o)
 
 all: compile build
 

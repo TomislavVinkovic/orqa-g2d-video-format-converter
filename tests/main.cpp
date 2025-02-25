@@ -1,17 +1,27 @@
-#include "../include/G2dPixelFormatConverter.hpp"
-#include "../include/G2dFormatManager.hpp"
-#include "../include/FileReaderWriter.hpp"
-#include "include/G2dConvertTestSuite.hpp"
+#include "G2dPixelFormatConverter.hpp"
+#include "G2dFormatManager.hpp"
+#include "FileReaderWriter.hpp"
 
 #include <vector>
 #include <iostream>
 #include <functional>
 
-void G2dConvertTestSuite::formatsPrintTest() {
+enum class G2dConvertTestSuiteStatus {
+    SUCCESS = 0,
+    FAILURE = -1
+};
+
+enum class TestStatus {
+    PASS = 0,
+    GENERAL_TEST_FAILURE = -1,
+    INCORRECT_RESULT_FAILURE = -2,
+};
+
+void formatsPrintTest() {
     G2dFormatManager::listAllFormats();
 }
 
-TestStatus G2dConvertTestSuite::YUYVToRGBAConversionTest() {
+TestStatus YUYVToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -41,7 +51,7 @@ TestStatus G2dConvertTestSuite::YUYVToRGBAConversionTest() {
         return TestStatus::INCORRECT_RESULT_FAILURE;
     }
 }
-TestStatus G2dConvertTestSuite::I420ToRGBAConversionTest() {
+TestStatus I420ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -72,7 +82,7 @@ TestStatus G2dConvertTestSuite::I420ToRGBAConversionTest() {
     }
 }
 
-TestStatus G2dConvertTestSuite::NV12ToRGBAConversionTest() {
+TestStatus NV12ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -103,7 +113,7 @@ TestStatus G2dConvertTestSuite::NV12ToRGBAConversionTest() {
     }
 }
 
-TestStatus G2dConvertTestSuite::NV21ToRGBAConversionTest() {
+TestStatus NV21ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -134,7 +144,7 @@ TestStatus G2dConvertTestSuite::NV21ToRGBAConversionTest() {
     }
 }
 
-TestStatus G2dConvertTestSuite::UYVYToRGBAConversionTest() {
+TestStatus UYVYToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -165,7 +175,7 @@ TestStatus G2dConvertTestSuite::UYVYToRGBAConversionTest() {
     }
 }
 
-TestStatus G2dConvertTestSuite::YV12ToRGBAConversionTest() {
+TestStatus YV12ToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -197,7 +207,7 @@ TestStatus G2dConvertTestSuite::YV12ToRGBAConversionTest() {
     
 }
 
-TestStatus G2dConvertTestSuite::YVYUToRGBAConversionTest() {
+TestStatus YVYUToRGBAConversionTest() {
     G2dPixelFormatConverter converter;
     FileReaderWriter fileReaderWriter;
 
@@ -228,32 +238,32 @@ TestStatus G2dConvertTestSuite::YVYUToRGBAConversionTest() {
     }
 }
 
-G2dConvertTestSuiteStatus G2dConvertTestSuite::runAllTests() {
+int main() {
     std::vector<std::function<TestStatus()>> tests = {
-        [this]() { return YUYVToRGBAConversionTest(); },
-        [this]() { return I420ToRGBAConversionTest(); },
-        [this]() { return NV12ToRGBAConversionTest(); },
-        [this]() { return NV21ToRGBAConversionTest(); },
-        [this]() { return UYVYToRGBAConversionTest(); },
-        [this]() { return YV12ToRGBAConversionTest(); },
-        [this]() { return YVYUToRGBAConversionTest(); }
+        YUYVToRGBAConversionTest,
+        I420ToRGBAConversionTest,
+        NV12ToRGBAConversionTest,
+        NV21ToRGBAConversionTest,
+        UYVYToRGBAConversionTest,
+        YV12ToRGBAConversionTest,
+        YVYUToRGBAConversionTest
     };
 
-    for (int i = 0; i < tests.size(); i++) {
+    for (size_t i = 0; i < tests.size(); i++) {
         TestStatus result = tests[i]();
         if (result == TestStatus::PASS) {
             std::cout << "Test " << i+1 << " passed" << std::endl;
         }
         else if (result == TestStatus::GENERAL_TEST_FAILURE) {
             std::cout << "Test " << i+1 << " failed with general test failure" << std::endl;
-            return G2dConvertTestSuiteStatus::FAILURE;
+            return -1;
         }
         else if(result == TestStatus::INCORRECT_RESULT_FAILURE) {
             std::cout << "Test " << i+1 << " failed" << std::endl;
-            return G2dConvertTestSuiteStatus::FAILURE;
+            return -1;
         }
     }
     
     std::cout << "All tests passed" << std::endl;
-    return G2dConvertTestSuiteStatus::SUCCESS;
+    return 0;
 }

@@ -1,5 +1,5 @@
-#include "include/G2dPixelFormatConverter.hpp"
-#include "include/G2dFormatManager.hpp"
+#include "G2dPixelFormatConverter.hpp"
+#include "G2dFormatManager.hpp"
 
 #include <cstring>
 #include <iostream>
