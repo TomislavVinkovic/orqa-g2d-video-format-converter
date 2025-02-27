@@ -36,8 +36,8 @@ class G2dPixelFormatConverter {
             g2d_format format,
             struct g2d_surface& surface,
             g2d_buf* buf,
-            size_t width,
-            size_t height
+            int width,
+            int height
         );
 
         /// @brief Configures the destination surface for G2D operations
@@ -51,8 +51,8 @@ class G2dPixelFormatConverter {
             g2d_format format,
             struct g2d_surface& surface,
             g2d_buf* buf,
-            size_t width,
-            size_t height
+            int width,
+            int height
         );
 
     public:        
@@ -66,8 +66,8 @@ class G2dPixelFormatConverter {
         /// @return SUCCESS on successful conversion, one of the errors defined
         /// in G2dPixelFormatConverterStatus on failure
         G2dPixelFormatConverterStatus convertImage(
-            ORQA_G2D_FORMAT srcFormat,
-            ORQA_G2D_FORMAT destFormat,
+            OrqaG2dFormat srcFormat,
+            OrqaG2dFormat destFormat,
             const std::vector<uint8_t>& srcBuffer,
             std::vector<uint8_t>& destBuffer,
             size_t width,

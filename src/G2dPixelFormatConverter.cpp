@@ -1,13 +1,14 @@
 #include "G2dPixelFormatConverter.hpp"
 #include "G2dFormatManager.hpp"
+#include "g2dEnums.hpp"
 
 #include <cstring>
 #include <iostream>
 #include <algorithm>
 
 G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
-    ORQA_G2D_FORMAT srcFormat,
-    ORQA_G2D_FORMAT destFormat,
+    OrqaG2dFormat srcFormat,
+    OrqaG2dFormat destFormat,
     const std::vector<uint8_t>& srcBuffer,
     std::vector<uint8_t>& destBuffer,
     size_t width,
@@ -17,7 +18,7 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
     std::optional<G2dFormatMetadata> srcG2dFormat = G2dFormatManager::getFormatMetadata(srcFormat);
     std::optional<G2dFormatMetadata> destG2dFormat = G2dFormatManager::getFormatMetadata(destFormat);
     if(!srcG2dFormat.has_value() || !destG2dFormat.has_value()) {
-        std::cerr << "Invalid source or destination format" << std::endl;
+        std::cerr << "Invalid source or destination format" << "\n";
         return G2dPixelFormatConverterStatus::INVALID_FORMAT_ERROR;
     }
 
@@ -25,15 +26,19 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
         G2dFormatManager::isFormatConversionSupported(srcG2dFormat->format, destG2dFormat->format) 
             != FormatManagerStatus::SUCCESS
     ) {
-        std::cerr << "Image conversion failed due to unsupported format pair." << std::endl;
+        std::cerr << "Image conversion failed due to unsupported format pair." << "\n";
         return G2dPixelFormatConverterStatus::UNSUPPORTED_CONVERSION_ERROR;
     }
 
-    void* handle;
-    struct g2d_surface srcSurface, destSurface;
+    void* handle = nullptr;
+    struct g2d_surface srcSurface {};
+    struct g2d_surface destSurface {};
 
     // set up the src buffer on the GPU
-    g2d_buf* srcG2dBuf = g2d_alloc(srcBuffer.size(), 0);
+    g2d_buf* srcG2dBuf = g2d_alloc(
+        static_cast<int>(srcBuffer.size()), 
+        static_cast<int>(G2dBufferCacheable::NON_CACHEABLE)
+    );
     std::memcpy(srcG2dBuf->buf_vaddr, srcBuffer.data(), srcBuffer.size());
 
     // reserve space for the destination buffer
@@ -43,28 +48,48 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
     );
 
     // set up the dest buffer on the GPU
-    g2d_buf* destG2dBuf = g2d_alloc(destBuffer.size(), 0);
+    g2d_buf* destG2dBuf = g2d_alloc(
+        static_cast<int>(destBuffer.size()), 
+        static_cast<int>(G2dBufferCacheable::NON_CACHEABLE)
+    );
 
     if(g2d_open(&handle) < 0) {
-        std::cerr << "Failed to open the video accelerator" << std::endl;
+        std::cerr << "Failed to open the video accelerator" << "\n";
         return G2dPixelFormatConverterStatus::DEVICE_ERROR;
     }
 
-    if(setSourceFormatSurface(srcG2dFormat->format, srcSurface, srcG2dBuf, width, height) != G2dPixelFormatConverterStatus::SUCCESS) {
-        std::cerr << "Failed to set source surface" << std::endl;
+    if(
+        setSourceFormatSurface(
+            srcG2dFormat->format, 
+            srcSurface, 
+            srcG2dBuf, 
+            static_cast<int>(width), 
+            static_cast<int>(height)
+        ) 
+        != G2dPixelFormatConverterStatus::SUCCESS
+    ) {
+        std::cerr << "Failed to set source surface" << "\n";
         return G2dPixelFormatConverterStatus::SURFACE_ERROR;
     }
-    if(setDestinationFormatSurface(destG2dFormat->format, destSurface, destG2dBuf, width, height) != G2dPixelFormatConverterStatus::SUCCESS) {
-        std::cerr << "Failed to set destination surface" << std::endl;
+    if(
+        setDestinationFormatSurface(
+            destG2dFormat->format, 
+            destSurface, destG2dBuf, 
+            static_cast<int>(width), 
+            static_cast<int>(height)
+        ) 
+        != G2dPixelFormatConverterStatus::SUCCESS
+    ) {
+        std::cerr << "Failed to set destination surface" << "\n";
         return G2dPixelFormatConverterStatus::SURFACE_ERROR;
     }
 
     if(g2d_blit(handle, &srcSurface, &destSurface) < 0) {
-        std::cerr << "This type of conversion is currently not supported" << std::endl;
+        std::cerr << "This type of conversion is currently not supported" << "\n";
         return G2dPixelFormatConverterStatus::GENERAL_CONVERSION_ERROR;
     }
     if(g2d_finish(handle) < 0) {
-        std::cerr << "Failed to finish the g2d operation" << std::endl;
+        std::cerr << "Failed to finish the g2d operation" << "\n";
         return G2dPixelFormatConverterStatus::FINISH_OPERATION_ERROR;
     }
     g2d_flush(handle);
@@ -74,12 +99,12 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
  
     // clean up
     if(g2d_free(srcG2dBuf) < 0 || g2d_free(destG2dBuf) < 0) {
-        std::cerr << "Failed to free buffers" << std::endl;
+        std::cerr << "Failed to free buffers" << "\n";
         return G2dPixelFormatConverterStatus::MEMORY_DEALLOCATION_ERROR;
     }
 
     if(g2d_close(handle) < 0) { 
-        std::cerr << "Failed to close the video accelerator" << std::endl;
+        std::cerr << "Failed to close the video accelerator" << "\n";
         return G2dPixelFormatConverterStatus::DEVICE_ERROR;
     }
 
@@ -90,10 +115,11 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::setSourceFormatSurface(
     g2d_format format,
     struct g2d_surface& surface,
     g2d_buf* buf,
-    size_t width,
-    size_t height
+    int width,
+    int height
 )
 {
+
     surface.left = 0;
     surface.top = 0;
     surface.right = width;
@@ -146,7 +172,7 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::setSourceFormatSurface(
         surface.stride = width;
     }
     else {
-        std::cerr << "Unsupported format" << std::endl;
+        std::cerr << "Unsupported format" << "\n";
         return G2dPixelFormatConverterStatus::UNSUPPORTED_SOURCE_FORMAT_ERROR;
     }
 
@@ -157,8 +183,8 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::setDestinationFormatSurfa
     g2d_format format,
     struct g2d_surface& surface,
     g2d_buf* buf,
-    size_t width,
-    size_t height
+    int width,
+    int height
 )
 {
     surface.left = 0;
@@ -215,7 +241,7 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::setDestinationFormatSurfa
         surface.stride = width;
     }
     else {
-        std::cerr << "Unsupported format" << std::endl;
+        std::cerr << "Unsupported format" << "\n";
         return G2dPixelFormatConverterStatus::UNSUPPORTED_DESTINATION_FORMAT_ERROR;
     }
 

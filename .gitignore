@@ -1,4 +1,6 @@
 *.o
+tidify_report.txt
 capture-frame
-build/
+bin/
+obj/
 .vscode/

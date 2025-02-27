@@ -19,7 +19,7 @@ public:
     /// @return FileReaderWriterStatus::SUCCESS on success, FileReaderWriterStatus::FILE_OPEN_FAILURE on failure
     FileReaderWriterStatus writeFileRaw(
         const std::string& filename, 
-        const std::span<uint8_t> buffer
+        std::span<const uint8_t> buffer
     );
 
     /// @brief Read a raw yuyv image file

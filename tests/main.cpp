@@ -33,8 +33,8 @@ TestStatus YUYVToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/yuyv.rgba", rgbaExcpectedBuffer);
     
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_YUYV, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_YUYV, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         yuyvBuffer, 
         rgbaBuffer, 
         640, 
@@ -63,8 +63,8 @@ TestStatus I420ToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/i420.rgba", rgbaExcpectedBuffer);
     
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_I420, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_I420, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         i420Buffer, 
         rgbaBuffer, 
         640, 
@@ -94,8 +94,8 @@ TestStatus NV12ToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/nv12.rgba", rgbaExcpectedBuffer);
 
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_NV12, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_NV12, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         nv12Buffer, 
         rgbaBuffer, 
         640, 
@@ -125,8 +125,8 @@ TestStatus NV21ToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/nv21.rgba", rgbaExcpectedBuffer);
     
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_NV21, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_NV21, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         nv21Buffer, 
         rgbaBuffer, 
         640, 
@@ -156,8 +156,8 @@ TestStatus UYVYToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/uyvy.rgba", rgbaExcpectedBuffer);
     
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_UYVY, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_UYVY, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         uyvyBuffer, 
         rgbaBuffer, 
         640, 
@@ -187,8 +187,8 @@ TestStatus YV12ToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/yv12.rgba", rgbaExcpectedBuffer);
 
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_YV12, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_YV12, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         yv12Buffer, 
         rgbaBuffer, 
         640, 
@@ -219,8 +219,8 @@ TestStatus YVYUToRGBAConversionTest() {
     fileReaderWriter.readFileRaw("tests/expected/yvyu.rgba", rgbaExcpectedBuffer);
     
     G2dPixelFormatConverterStatus result = converter.convertImage(
-        ORQA_G2D_FORMAT::FMT_YVYU, 
-        ORQA_G2D_FORMAT::FMT_RGBA8888, 
+        OrqaG2dFormat::FMT_YVYU, 
+        OrqaG2dFormat::FMT_RGBA8888, 
         yvyuBuffer, 
         rgbaBuffer, 
         640, 
@@ -252,18 +252,18 @@ int main() {
     for (size_t i = 0; i < tests.size(); i++) {
         TestStatus result = tests[i]();
         if (result == TestStatus::PASS) {
-            std::cout << "Test " << i+1 << " passed" << std::endl;
+            std::cout << "Test " << i+1 << " passed" << "\n";
         }
         else if (result == TestStatus::GENERAL_TEST_FAILURE) {
-            std::cout << "Test " << i+1 << " failed with general test failure" << std::endl;
+            std::cout << "Test " << i+1 << " failed with general test failure" << "\n";
             return -1;
         }
         else if(result == TestStatus::INCORRECT_RESULT_FAILURE) {
-            std::cout << "Test " << i+1 << " failed" << std::endl;
+            std::cout << "Test " << i+1 << " failed" << "\n";
             return -1;
         }
     }
     
-    std::cout << "All tests passed" << std::endl;
+    std::cout << "All tests passed" << "\n";
     return 0;
 }

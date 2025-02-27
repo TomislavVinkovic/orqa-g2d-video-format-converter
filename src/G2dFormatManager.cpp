@@ -1,31 +1,31 @@
 #include "G2dFormatManager.hpp"
 #include <iostream>
 
-std::optional<ORQA_G2D_FORMAT> G2dFormatManager::getFormatEnumFromString(const std::string& formatStr) {
-    if(ORQA_FORMAT_LOOKUP.find(formatStr) != ORQA_FORMAT_LOOKUP.end()) {
-        return ORQA_FORMAT_LOOKUP.at(formatStr);
-    } else {
+std::optional<OrqaG2dFormat> G2dFormatManager::getFormatEnumFromString(const std::string& formatStr) {
+    if(OrqaFormatLookup.find(formatStr) == OrqaFormatLookup.end()) {
         return {};
     }
+    return OrqaFormatLookup.at(formatStr);
+    
 }
 
-std::optional<G2dFormatMetadata> G2dFormatManager::getFormatMetadata(ORQA_G2D_FORMAT format) {
-    if(ORQA_TO_G2D_FORMAT_MAP.find(format) != ORQA_TO_G2D_FORMAT_MAP.end()) {
-        return ORQA_TO_G2D_FORMAT_MAP.at(format);
-    } else {
+std::optional<G2dFormatMetadata> G2dFormatManager::getFormatMetadata(OrqaG2dFormat format) {
+    if(OrqaToG2DFormatMap.find(format) == OrqaToG2DFormatMap.end()) {
         return {};
+        
     }
+    return OrqaToG2DFormatMap.at(format);
 }
 
 FormatManagerStatus G2dFormatManager::isFormatConversionSupported(g2d_format srcFormat, g2d_format destFormat) {
     if(
         std::find(
-            G2D_FORMAT_COMPATIBILITY_LIST.begin(), 
-            G2D_FORMAT_COMPATIBILITY_LIST.end(), 
+            G2dFormatCompatibilityList.begin(), 
+            G2dFormatCompatibilityList.end(), 
             std::make_pair(srcFormat, destFormat)
-        ) == G2D_FORMAT_COMPATIBILITY_LIST.end()
+        ) == G2dFormatCompatibilityList.end()
     ) {
-        std::cerr << "Unsupported format conversion" << std::endl;
+        std::cerr << "Unsupported format conversion" << "\n";
         return FormatManagerStatus::CONVERSION_NOT_SUPPORTED_ERROR;
     }
     return FormatManagerStatus::SUCCESS;
@@ -33,7 +33,7 @@ FormatManagerStatus G2dFormatManager::isFormatConversionSupported(g2d_format src
 }
 
 void G2dFormatManager::listAllFormats() {
-    for(const auto& [alias, orqaFormat] : ORQA_FORMAT_LOOKUP) {
-        std::cout << alias << std::endl;
+    for(const auto& [alias, orqaFormat] : OrqaFormatLookup) {
+        std::cout << alias << "\n";
     }
 }

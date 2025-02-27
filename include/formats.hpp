@@ -6,7 +6,7 @@
 
 #include "G2dFormatMetadata.hpp"
 
-enum class ORQA_G2D_FORMAT {
+enum class OrqaG2dFormat {
     FMT_RGB565 = 0,
     FMT_RGBA8888,
     FMT_RGBX8888,
@@ -27,53 +27,53 @@ enum class ORQA_G2D_FORMAT {
     FMT_NV61,
 };
 
-static const std::unordered_map<std::string, ORQA_G2D_FORMAT> ORQA_FORMAT_LOOKUP = {
-    {"RGB565", ORQA_G2D_FORMAT::FMT_RGB565},
-    {"RGBA8888", ORQA_G2D_FORMAT::FMT_RGBA8888},
-    {"RGBX8888", ORQA_G2D_FORMAT::FMT_RGBX8888},
-    {"ARGB8888", ORQA_G2D_FORMAT::FMT_ARGB8888},
-    {"XRGB8888", ORQA_G2D_FORMAT::FMT_XRGB8888},
-    {"RGB888", ORQA_G2D_FORMAT::FMT_RGB888},
-    {"RGBA5551", ORQA_G2D_FORMAT::FMT_RGBA5551},
-    {"RGBX5551", ORQA_G2D_FORMAT::FMT_RGBX5551},
-    {"NV12", ORQA_G2D_FORMAT::FMT_NV12},
-    {"I420", ORQA_G2D_FORMAT::FMT_I420},
-    {"YV12", ORQA_G2D_FORMAT::FMT_YV12},
-    {"NV21", ORQA_G2D_FORMAT::FMT_NV21},
-    {"YUYV", ORQA_G2D_FORMAT::FMT_YUYV},
-    {"YVYU", ORQA_G2D_FORMAT::FMT_YVYU},
-    {"UYVY", ORQA_G2D_FORMAT::FMT_UYVY},
-    {"VYUY", ORQA_G2D_FORMAT::FMT_VYUY},
-    {"NV16", ORQA_G2D_FORMAT::FMT_NV16},
-    {"NV61", ORQA_G2D_FORMAT::FMT_NV61},
+static const std::unordered_map<std::string, OrqaG2dFormat> OrqaFormatLookup = {
+    {"RGB565", OrqaG2dFormat::FMT_RGB565},
+    {"RGBA8888", OrqaG2dFormat::FMT_RGBA8888},
+    {"RGBX8888", OrqaG2dFormat::FMT_RGBX8888},
+    {"ARGB8888", OrqaG2dFormat::FMT_ARGB8888},
+    {"XRGB8888", OrqaG2dFormat::FMT_XRGB8888},
+    {"RGB888", OrqaG2dFormat::FMT_RGB888},
+    {"RGBA5551", OrqaG2dFormat::FMT_RGBA5551},
+    {"RGBX5551", OrqaG2dFormat::FMT_RGBX5551},
+    {"NV12", OrqaG2dFormat::FMT_NV12},
+    {"I420", OrqaG2dFormat::FMT_I420},
+    {"YV12", OrqaG2dFormat::FMT_YV12},
+    {"NV21", OrqaG2dFormat::FMT_NV21},
+    {"YUYV", OrqaG2dFormat::FMT_YUYV},
+    {"YVYU", OrqaG2dFormat::FMT_YVYU},
+    {"UYVY", OrqaG2dFormat::FMT_UYVY},
+    {"VYUY", OrqaG2dFormat::FMT_VYUY},
+    {"NV16", OrqaG2dFormat::FMT_NV16},
+    {"NV61", OrqaG2dFormat::FMT_NV61},
 };
 
 /// @brief Mapping of format strings to their corresponding G2D format and bits per pixel
-static const std::unordered_map<ORQA_G2D_FORMAT, G2dFormatMetadata> ORQA_TO_G2D_FORMAT_MAP = {
-    {ORQA_G2D_FORMAT::FMT_RGB565, {G2D_RGB565, 16}},
-    {ORQA_G2D_FORMAT::FMT_RGBA8888, {G2D_RGBA8888, 32}},
-    {ORQA_G2D_FORMAT::FMT_RGBX8888, {G2D_RGBX8888, 32}},
-    {ORQA_G2D_FORMAT::FMT_ARGB8888, {G2D_ARGB8888, 32}},
-    {ORQA_G2D_FORMAT::FMT_XRGB8888, {G2D_XRGB8888, 32}},
-    {ORQA_G2D_FORMAT::FMT_RGB888, {G2D_RGB888, 24}},
-    {ORQA_G2D_FORMAT::FMT_RGBA5551, {G2D_RGBA5551, 16}},
-    {ORQA_G2D_FORMAT::FMT_RGBX5551, {G2D_RGBX5551, 16}},
-    {ORQA_G2D_FORMAT::FMT_NV12, {G2D_NV12, 12}},
-    {ORQA_G2D_FORMAT::FMT_I420, {G2D_I420, 12}},
-    {ORQA_G2D_FORMAT::FMT_YV12, {G2D_YV12, 12}},
-    {ORQA_G2D_FORMAT::FMT_NV21, {G2D_NV21, 12}},
-    {ORQA_G2D_FORMAT::FMT_YUYV, {G2D_YUYV, 16}},
-    {ORQA_G2D_FORMAT::FMT_YVYU, {G2D_YVYU, 16}},
-    {ORQA_G2D_FORMAT::FMT_UYVY, {G2D_UYVY, 16}},
-    {ORQA_G2D_FORMAT::FMT_VYUY, {G2D_VYUY, 16}},
-    {ORQA_G2D_FORMAT::FMT_NV16, {G2D_NV16, 16}},
-    {ORQA_G2D_FORMAT::FMT_NV61, {G2D_NV61, 16}},
+static const std::unordered_map<OrqaG2dFormat, G2dFormatMetadata> OrqaToG2DFormatMap = {
+    {OrqaG2dFormat::FMT_RGB565, {G2D_RGB565, 16}},
+    {OrqaG2dFormat::FMT_RGBA8888, {G2D_RGBA8888, 32}},
+    {OrqaG2dFormat::FMT_RGBX8888, {G2D_RGBX8888, 32}},
+    {OrqaG2dFormat::FMT_ARGB8888, {G2D_ARGB8888, 32}},
+    {OrqaG2dFormat::FMT_XRGB8888, {G2D_XRGB8888, 32}},
+    {OrqaG2dFormat::FMT_RGB888, {G2D_RGB888, 24}},
+    {OrqaG2dFormat::FMT_RGBA5551, {G2D_RGBA5551, 16}},
+    {OrqaG2dFormat::FMT_RGBX5551, {G2D_RGBX5551, 16}},
+    {OrqaG2dFormat::FMT_NV12, {G2D_NV12, 12}},
+    {OrqaG2dFormat::FMT_I420, {G2D_I420, 12}},
+    {OrqaG2dFormat::FMT_YV12, {G2D_YV12, 12}},
+    {OrqaG2dFormat::FMT_NV21, {G2D_NV21, 12}},
+    {OrqaG2dFormat::FMT_YUYV, {G2D_YUYV, 16}},
+    {OrqaG2dFormat::FMT_YVYU, {G2D_YVYU, 16}},
+    {OrqaG2dFormat::FMT_UYVY, {G2D_UYVY, 16}},
+    {OrqaG2dFormat::FMT_VYUY, {G2D_VYUY, 16}},
+    {OrqaG2dFormat::FMT_NV16, {G2D_NV16, 16}},
+    {OrqaG2dFormat::FMT_NV61, {G2D_NV61, 16}},
 };
 
 /// @brief List of supported format conversion pairs. 
 /// Each pair represents a valid source->destination format conversion
 /// that is supported by the G2D hardware
-const static std::vector<std::pair<g2d_format, g2d_format>> G2D_FORMAT_COMPATIBILITY_LIST = {
+const static std::vector<std::pair<g2d_format, g2d_format>> G2dFormatCompatibilityList = {
     // YUV -> YUV format conversions
     {G2D_NV12, G2D_YUYV},
     {G2D_I420, G2D_YUYV},

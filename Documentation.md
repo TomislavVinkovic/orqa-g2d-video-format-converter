@@ -25,8 +25,8 @@ Converts the image from the source
 
 ```c++
 G2dPixelFormatConverterStatus convertImage (
-	ORQA_G2D_FORMAT srcFormat,
-	ORQA_G2D_FORMAT destFormat,
+	OrqaG2dFormat srcFormat,
+	OrqaG2dFormat destFormat,
 	const std::vector<uint8_t>& srcBuffer,
 	std::vector<uint8_t>& destBuffer,
 	size_t width,
@@ -46,8 +46,8 @@ G2dPixelFormatConverterStatus convertImage (
 ```c++
 G2dPixelFormatConverter converter;
 G2dPixelFormatConverterStatus result = converter.convertImage(
-	ORQA_G2D_FORMAT::FMT_YVYU,
-	ORQA_G2D_FORMAT::FMT_RGBA8888,
+	OrqaG2dFormat::FMT_YVYU,
+	OrqaG2dFormat::FMT_RGBA8888,
 	yvyuBuffer,
 	rgbaBuffer,
 	640,
@@ -56,32 +56,32 @@ G2dPixelFormatConverterStatus result = converter.convertImage(
 ```
 
 ### Class: G2dFormatManager
-Handles mapping our custom `ORQA_G2D_FORMAT` enum values to `G2D_FORMAT` enum values used by G2d, and mapping image format strings from the command line to our custom `ORQA_G2D_FORMAT` enum values.
+Handles mapping our custom `OrqaG2dFormat` enum values to `G2D_FORMAT` enum values used by G2d, and mapping image format strings from the command line to our custom `OrqaG2dFormat` enum values.
 #### Constructors
 The class has all its constructors deleted. That is because all of its methods are static.
 #### Methods
 ##### `getFormatEnumFromString`
-Maps the image format string from the terminal to our custom `ORQA_G2D_FORMAT` values.
+Maps the image format string from the terminal to our custom `OrqaG2dFormat` values.
 
 ```c++
-static std::optional<ORQA_G2D_FORMAT> getFormatEnumFromString(const std::string& formatStr);
+static std::optional<OrqaG2dFormat> getFormatEnumFromString(const std::string& formatStr);
 ```
 **Parameters**
 - `formatStr` - Format string key
-**Returns**: An optional value that can be either an `ORQA_G2D_FORMAT` value or a `std::optional` empty value, which implies that the format string provided is not found.
+**Returns**: An optional value that can be either an `OrqaG2dFormat` value or a `std::optional` empty value, which implies that the format string provided is not found.
 
 **Usage example**
 ```c++
-std::optional<ORQA_G2D_FORMAT> formatSrcEnum;
+std::optional<OrqaG2dFormat> formatSrcEnum;
 formatSrcEnum = G2dFormatManager::getFormatEnumFromString(formatSrc);
 ```
 ##### `getFormatMetadata`
-Maps our custom `ORQA_G2D_FORMAT` values to `G2dFormatMetadata` values, used for image processing in G2d.
+Maps our custom `OrqaG2dFormat` values to `G2dFormatMetadata` values, used for image processing in G2d.
 ```c++
-static std::optional<G2dFormatMetadata> getFormatMetadata(ORQA_G2D_FORMAT format);
+static std::optional<G2dFormatMetadata> getFormatMetadata(OrqaG2dFormat format);
 ```
 **Parameters**
-- `format` - `ORQA_G2D_FORMAT` enum value
+- `format` - `OrqaG2dFormat` enum value
 **Returns**
 An optional value that can be either an `G2dFormatMetadata` value or a `std::optional` empty value.
 
@@ -170,8 +170,8 @@ TestStatus YUYVToRGBAConversionTest() {
 	fileReaderWriter.readFileRaw("tests/expected/yuyv.rgba", rgbaExcpectedBuffer);
 
 	G2dPixelFormatConverterStatus result = converter.convertImage(
-		ORQA_G2D_FORMAT::FMT_YUYV,
-		ORQA_G2D_FORMAT::FMT_RGBA8888,
+		OrqaG2dFormat::FMT_YUYV,
+		OrqaG2dFormat::FMT_RGBA8888,
 		yuyvBuffer,
 		rgbaBuffer,
 		640,

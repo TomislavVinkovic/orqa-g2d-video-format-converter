@@ -16,17 +16,16 @@ enum class FormatManagerStatus {
 class G2dFormatManager {
     public:
         G2dFormatManager() = delete;
-        ~G2dFormatManager() = delete;
 
-        /// @brief Gets the ORQA_G2D_FORMAT enum from a format string
+        /// @brief Gets the OrqaG2dFormat enum from a format string
         /// @param formatStr The string representation of the format (e.g., "RGB565", "NV12")
-        /// @return Optional containing ORQA_G2D_FORMAT if found, empty optional otherwise
-        static std::optional<ORQA_G2D_FORMAT> getFormatEnumFromString(const std::string& formatStr);
+        /// @return Optional containing OrqaG2dFormat if found, empty optional otherwise
+        static std::optional<OrqaG2dFormat> getFormatEnumFromString(const std::string& formatStr);
 
-        /// @brief Gets the G2D format and bits-per-pixel from an ORQA_G2D_FORMAT enum
-        /// @param format ORQA_G2D_FORMAT enum value
+        /// @brief Gets the G2D format and bits-per-pixel from an OrqaG2dFormat enum
+        /// @param format OrqaG2dFormat enum value
         /// @return Optional containing G2dFormatMetadata if found, empty optional otherwise
-        static std::optional<G2dFormatMetadata> getFormatMetadata(ORQA_G2D_FORMAT format);
+        static std::optional<G2dFormatMetadata> getFormatMetadata(OrqaG2dFormat format);
 
         /// @brief Checks if conversion between two formats is supported
         /// @param srcFormat Source G2D format

@@ -3,17 +3,17 @@
 
 FileReaderWriterStatus FileReaderWriter::writeFileRaw (
     const std::string& filename, 
-    const std::span<uint8_t> buffer
+    std::span<const uint8_t> buffer
 ) {
     std::ofstream file(filename, std::ios::binary);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        std::cerr << "Failed to open file: " << filename << "\n";
         return FileReaderWriterStatus::FILE_OPEN_FAILURE;
     }
 
     file.write(
         reinterpret_cast<const char*>(buffer.data()), 
-        buffer.size()
+        static_cast<std::streamsize>(buffer.size())
     );
     file.flush();
     file.close();
@@ -27,12 +27,12 @@ FileReaderWriterStatus FileReaderWriter::readFileRaw (
 ) {
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        std::cerr << "Failed to open file: " << filename << "\n";
         return FileReaderWriterStatus::FILE_OPEN_FAILURE;
     }
 
     file.seekg(0, std::ios::end);
-    int size = file.tellg();
+    const std::streampos size = file.tellg();
     file.seekg(0, std::ios::beg);
 
     buffer.clear();
@@ -40,7 +40,7 @@ FileReaderWriterStatus FileReaderWriter::readFileRaw (
 
     file.read(
         reinterpret_cast<char*>(buffer.data()), 
-        size
+        static_cast<std::streamsize>(size)
     );
     file.close();
 
