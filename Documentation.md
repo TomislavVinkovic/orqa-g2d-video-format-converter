@@ -29,8 +29,10 @@ G2dPixelFormatConverterStatus convertImage (
 	OrqaG2dFormat destFormat,
 	const std::vector<uint8_t>& srcBuffer,
 	std::vector<uint8_t>& destBuffer,
-	size_t width,
-	size_t height
+	size_t srcWidth,
+	size_t srcHeight,
+  size_t destWidth,
+	size_t destHeight
 )
 ```
 **Parameters**:
@@ -38,8 +40,10 @@ G2dPixelFormatConverterStatus convertImage (
 - `destFormat` - format of the destination buffer
 - `srcBuffer` - A reference to a the buffer in which the raw source image data is located
 - `destBuffer` - A reference to a the buffer to write the raw converted image data to
-- `width` - image width
-- `height` - image height
+- `srcWidth` - source image width
+- `srcHeight` - source image height
+- `destWidth` - destination image width
+- `destHeight` - destination image height
 **Returns**: A `G2dPixelFormatConverterStatus` enum value, that describes the exact error that occured during runtime.
 
 **Usage example**
@@ -51,7 +55,9 @@ G2dPixelFormatConverterStatus result = converter.convertImage(
 	yvyuBuffer,
 	rgbaBuffer,
 	640,
-	480
+	480,
+  640,
+  480
 );
 ```
 
@@ -216,6 +222,7 @@ The converter supports the following G2D file formats
 - `G2D_RGB888 (RGB888)` - 24 bit RGB
 - `G2D_RGBA5551 (RGBA5551)` - 16 bit RGBA
 - `G2D_RGBX5551 (RGBX5551)`  - 16 bit RGB, with the last bit of each pixel treated as junk
+- `G2D_BGRX8888 (BGRX8888)` - 32 bit BGR, with the last byte of each pixel treated as junk
 - `G2D_NV12 (NV12)` - NV12 YUV 4:2:0 format
 - `G2D_I420 (I420)` - I420 YUV 4:2:0 format
 - `G2D_YV12 (YV12)` - YV12 YUV 4:2:0 format
@@ -275,6 +282,10 @@ The converter supports the following G2D file formats
 - `G2D_RGBA5551`
 - `G2D_RGBX5551`
 - `G2D_RGB888`
+- `G2D_BGRX8888`
+
+**G2D_BGRX8888**  
+- `G2D_YUYV`
 
 **G2D_I420**  
   - `G2D_ARGB8888`  
