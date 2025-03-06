@@ -61,8 +61,10 @@ class G2dPixelFormatConverter {
         /// @param destFormat String representation of destination format
         /// @param srcBuffer Vector containing source image data
         /// @param destBuffer Vector to store converted image data (will be resized as needed)
-        /// @param width Width of the image in pixels
-        /// @param height Height of the image in pixels
+        /// @param srcWidth Width of the source image in pixels
+        /// @param srcHeight Height of the source image in pixels
+        /// @param destWidth Width of the destination image in pixels
+        /// @param destHeight Height of the destination image in pixels
         /// @return SUCCESS on successful conversion, one of the errors defined
         /// in G2dPixelFormatConverterStatus on failure
         G2dPixelFormatConverterStatus convertImage(
@@ -70,7 +72,9 @@ class G2dPixelFormatConverter {
             OrqaG2dFormat destFormat,
             const std::vector<uint8_t>& srcBuffer,
             std::vector<uint8_t>& destBuffer,
-            size_t width,
-            size_t height
+            size_t srcWidth,
+            size_t srcHeight,
+            size_t destWidth,
+            size_t destHeight
         );
 };

@@ -11,8 +11,10 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
     OrqaG2dFormat destFormat,
     const std::vector<uint8_t>& srcBuffer,
     std::vector<uint8_t>& destBuffer,
-    size_t width,
-    size_t height
+    size_t srcWidth,
+    size_t srcHeight,
+    size_t destWidth,
+    size_t destHeight
 )
 {
     std::optional<G2dFormatMetadata> srcG2dFormat = G2dFormatManager::getFormatMetadata(srcFormat);
@@ -43,7 +45,7 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
 
     // reserve space for the destination buffer
     destBuffer.resize(
-        width * height * static_cast<size_t>(destG2dFormat->bpp / 8), 
+        destWidth* destHeight * static_cast<size_t>(destG2dFormat->bpp / 8), 
         0
     );
 
@@ -60,13 +62,12 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
 
     if(
         setSourceFormatSurface(
-            srcG2dFormat->format, 
+            srcG2dFormat->format,
             srcSurface, 
             srcG2dBuf, 
-            static_cast<int>(width), 
-            static_cast<int>(height)
-        ) 
-        != G2dPixelFormatConverterStatus::SUCCESS
+            static_cast<int>(srcWidth), 
+            static_cast<int>(srcHeight)
+        ) != G2dPixelFormatConverterStatus::SUCCESS
     ) {
         std::cerr << "Failed to set source surface" << "\n";
         return G2dPixelFormatConverterStatus::SURFACE_ERROR;
@@ -75,8 +76,8 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::convertImage(
         setDestinationFormatSurface(
             destG2dFormat->format, 
             destSurface, destG2dBuf, 
-            static_cast<int>(width), 
-            static_cast<int>(height)
+            static_cast<int>(destWidth), 
+            static_cast<int>(destHeight)
         ) 
         != G2dPixelFormatConverterStatus::SUCCESS
     ) {
