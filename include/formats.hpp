@@ -15,6 +15,7 @@ enum class OrqaG2dFormat {
     FMT_RGB888,
     FMT_RGBA5551,
     FMT_RGBX5551,
+    FMT_BGRX8888,
     FMT_NV12,
     FMT_I420,
     FMT_YV12,
@@ -36,6 +37,7 @@ static const std::unordered_map<std::string, OrqaG2dFormat> OrqaFormatLookup = {
     {"RGB888", OrqaG2dFormat::FMT_RGB888},
     {"RGBA5551", OrqaG2dFormat::FMT_RGBA5551},
     {"RGBX5551", OrqaG2dFormat::FMT_RGBX5551},
+    {"BGRX8888", OrqaG2dFormat::FMT_BGRX8888},
     {"NV12", OrqaG2dFormat::FMT_NV12},
     {"I420", OrqaG2dFormat::FMT_I420},
     {"YV12", OrqaG2dFormat::FMT_YV12},
@@ -55,6 +57,7 @@ static const std::unordered_map<OrqaG2dFormat, G2dFormatMetadata> OrqaToG2DForma
     {OrqaG2dFormat::FMT_RGBX8888, {G2D_RGBX8888, 32}},
     {OrqaG2dFormat::FMT_ARGB8888, {G2D_ARGB8888, 32}},
     {OrqaG2dFormat::FMT_XRGB8888, {G2D_XRGB8888, 32}},
+    {OrqaG2dFormat::FMT_BGRX8888, {G2D_BGRX8888, 32}},
     {OrqaG2dFormat::FMT_RGB888, {G2D_RGB888, 24}},
     {OrqaG2dFormat::FMT_RGBA5551, {G2D_RGBA5551, 16}},
     {OrqaG2dFormat::FMT_RGBX5551, {G2D_RGBX5551, 16}},
@@ -120,6 +123,7 @@ const static std::vector<std::pair<g2d_format, g2d_format>> G2dFormatCompatibili
     {G2D_RGBX5551, G2D_YUYV},
 
     {G2D_NV12, G2D_RGB565},
+    {G2D_NV21, G2D_BGRX8888},
     {G2D_NV12, G2D_RGBA8888},
     {G2D_NV12, G2D_RGBX8888},
     {G2D_NV12, G2D_ARGB8888},
@@ -137,6 +141,7 @@ const static std::vector<std::pair<g2d_format, g2d_format>> G2dFormatCompatibili
     {G2D_YV12, G2D_RGBX5551},
 
     {G2D_NV21, G2D_RGB565},
+    {G2D_NV21, G2D_BGRX8888},
     {G2D_NV21, G2D_RGBA8888},
     {G2D_NV21, G2D_RGBX8888},
     {G2D_NV21, G2D_ARGB8888},
@@ -145,6 +150,7 @@ const static std::vector<std::pair<g2d_format, g2d_format>> G2dFormatCompatibili
     {G2D_NV21, G2D_RGBX5551},
 
     {G2D_YUYV, G2D_RGB565},
+    {G2D_YUYV, G2D_BGRX8888},
     {G2D_YUYV, G2D_RGBA8888},
     {G2D_YUYV, G2D_RGBX8888},
     {G2D_YUYV, G2D_ARGB8888},

@@ -235,6 +235,7 @@ G2dPixelFormatConverterStatus G2dPixelFormatConverter::setDestinationFormatSurfa
         format == G2D_RGBX5551 || 
         format == G2D_RGB565 ||
         format == G2D_RGBX8888 ||
+        format == G2D_BGRX8888 ||
         format == G2D_ARGB8888
     ) {
         surface.planes[0] = buf->buf_paddr;
